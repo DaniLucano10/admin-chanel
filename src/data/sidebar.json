@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Analíticas",
+    "path": "/",
+    "icon": "RiBarChart2Line"
+  },
+  {
+    "title": "Redes sociales",
+    "icon": "RiEarthLine",
+    "submenu": [
+      {
+        "title": "Post red social",
+        "path": "/",
+        "icon": "RiFileTextLine"
+      },
+      {
+        "title": "Estadisticas",
+        "path": "/",
+        "icon": "RiBarChartFill"
+      },
+      {
+        "title": "Perfiles",
+        "path": "/",
+        "icon": "RiUser3Line"
+      }
+    ]
+  },
+  {
+    "title": "Mensajes",
+    "path": "/tickets",
+    "icon": "RiMessage3Line"
+  },
+  {
+    "title": "Calendario",
+    "path": "/",
+    "icon": "RiCalendarTodoLine"
+  }
+]

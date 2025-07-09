@@ -1,0 +1,83 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        primary: "var(--color-primary)",
+        secondary: "var(--color-secondary)",
+
+        blue: {
+          100: "var(--color-blue-100)",
+          300: "var(--color-blue-300)",
+          500: "var(--color-blue-500)",
+          700: "var(--color-blue-700)",
+          900: "var(--color-blue-900)",
+        },
+        red: {
+          100: "var(--color-red-100)",
+          300: "var(--color-red-300)",
+          500: "var(--color-red-500)",
+          700: "var(--color-red-700)",
+          900: "var(--color-red-900)",
+        },
+        green: {
+          100: "var(--color-green-100)",
+          300: "var(--color-green-300)",
+          500: "var(--color-green-500)",
+          700: "var(--color-green-700)",
+          900: "var(--color-green-900)",
+        },
+        yellow: {
+          100: "var(--color-yellow-100)",
+          300: "var(--color-yellow-300)",
+          500: "var(--color-yellow-500)",
+          700: "var(--color-yellow-700)",
+          900: "var(--color-yellow-900)",
+        },
+        cyan: {
+          100: "var(--color-cyan-100)",
+          300: "var(--color-cyan-300)",
+          500: "var(--color-cyan-500)",
+          700: "var(--color-cyan-700)",
+          900: "var(--color-cyan-900)",
+        },
+        purple: {
+          100: "var(--color-purple-100)",
+          300: "var(--color-purple-300)",
+          500: "var(--color-purple-500)",
+          700: "var(--color-purple-700)",
+          900: "var(--color-purple-900)",
+        },
+        sky: {
+          50: "var(--color-sky-50)",
+          100: "var(--color-sky-100)",
+          200: "var(--color-sky-200)",
+          300: "var(--color-sky-300)",
+          400: "var(--color-sky-400)",
+          500: "var(--color-sky-500)",
+          600: "var(--color-sky-600)",
+          700: "var(--color-sky-700)",
+          800: "var(--color-sky-800)",
+          900: "var(--color-sky-900)",
+          950: "var(--color-sky-950)",
+        },
+        gray: {
+          50: "var(--color-gray-50)",
+          100: "var(--color-gray-100)",
+          200: "var(--color-gray-200)",
+          300: "var(--color-gray-300)",
+          400: "var(--color-gray-400)",
+          500: "var(--color-gray-500)",
+          600: "var(--color-gray-600)",
+          700: "var(--color-gray-700)",
+          800: "var(--color-gray-800)",
+          900: "var(--color-gray-900)",
+          950: "var(--color-gray-950)",
+        },
+      },
+    },
+  },
+  plugins: [],
+};
