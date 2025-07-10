@@ -15,14 +15,15 @@ export const TopBar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <header className="w-full h-[75px] flex items-center gap-4 p-4 bg-gray-100 dark:bg-sky-950 text-zinc-700 dark:text-gray-400 justify-end rounded-b-xl md:rounded-xl">
+    <header className="w-full h-[75px] flex items-center gap-4 p-4 bg-gray-200 dark:bg-sidebar text-gray-700 dark:text-gray-400 justify-end rounded-b-xl md:rounded-xl">
       <nav className="flex items-center gap-x-4">
         <button
           onClick={toggleTheme}
-          className="relative hover:bg-secondary-100 p-2 rounded-lg transition-colors"
+          className="relative hover:bg-secondary p-2 rounded-lg transition-colors"
         >
           {theme === 'light' ? <RiMoonLine /> : <RiSunLine />}
         </button>
+
         <Menu
           menuButton={
             <MenuButton className="relative hover:bg-secondary-100 p-2 rounded-lg transition-colors">
