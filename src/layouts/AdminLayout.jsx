@@ -4,7 +4,7 @@ import { TopBar } from "../components/navigation/TopBar";
 
 export const AdminLayout = () => {
   return (
-    <div className="w-full h-screen flex bg-gray-100 dark:bg-sky-900 md:p-4 gap-4 ">
+    <div className="w-full h-screen flex bg-background dark:bg-background md:p-4 gap-4 ">
       <Sidebar />
       <div className="w-full h-full flex flex-col transition-all">
         <TopBar />
