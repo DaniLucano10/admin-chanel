@@ -21,7 +21,7 @@ export const UserTable = ({ users, currentPage, onPageChange }) => {
   const currentTableData = users.slice(firstPageIndex, lastPageIndex);
 
   return (
-    <div className="bg-card p-4 rounded-lg shadow-md border border-border">
+    <div className="w-[360px] md:w-full overflow-x-auto bg-card p-4 rounded-lg shadow-md border border-border">
       <Table>
         <TableHeader>
           <TableRow>
