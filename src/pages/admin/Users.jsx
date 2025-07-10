@@ -28,7 +28,7 @@ export const Users = () => {
   }, [searchTerm]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 w-full">
       <h1 className="text-2xl text-black dark:text-white font-bold">Lista de Usuarios</h1>
 
       <div className="flex justify-between items-center flex-wrap gap-4">

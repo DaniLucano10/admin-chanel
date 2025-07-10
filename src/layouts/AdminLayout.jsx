@@ -9,7 +9,7 @@ export const AdminLayout = () => {
       <div className="w-full h-full flex flex-col transition-all">
         <TopBar />
         <main className="w-full overflow-y-auto scrollbar scrollbar-1 md:scrollbar space-y-4 mt-4">
-          <div className="p-8">
+          <div >
             <Outlet />
           </div>
         </main>
