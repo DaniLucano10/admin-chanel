@@ -19,12 +19,12 @@ export const Sidebar = () => {
   return (
     <>
       <div
-        className={`h-full w-72 top-0 flex flex-col z-50 text-black dark:text-white mb-10 rounded-e-2xl md:rounded-xl shadow-2xl transition-all duration-300 bg-gray-800 dark:bg-sky-950 p-4 justify-between${
+        className={`h-full w-72 top-0 flex flex-col z-50 text-gray-700 dark:text-gray-400 mb-10 rounded-e-2xl md:rounded-xl shadow-2xl transition-all duration-300 bg-gray-300 dark:bg-sidebar p-4 justify-between${
           showMenu ? " left-0" : " -left-full"
         } transition-all`}
       >
         <div>
-          <h1 className="text-center text-2xl font-bold text-black dark:text-white mb-10">
+          <h1 className="text-center text-2xl font-bold text-gray-700 dark:text-gray-400 mb-10">
             Admin<span className="text-primary text-4xl">.</span>
           </h1>
           <ul>
