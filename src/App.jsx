@@ -10,13 +10,9 @@ import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
 import { ForgetPassword } from "./pages/auth/ForgetPassword";
 
-import { useContext } from "react";
-import { ThemeContext } from "./context/ThemeContext";
-
 function App() {
-  const { theme } = useContext(ThemeContext);
   return (
-    <div className={`${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AdminLayout />}>
