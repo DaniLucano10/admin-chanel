@@ -18,11 +18,20 @@ export const Sidebar = () => {
   };
 
   return (
-    <>
+    <div className="relative">
+      {/* Overlay en mobile */}
+      {showMenu && (
+        <div
+          className="fixed inset-0 bg-black/30 xl:hidden z-40"
+          onClick={() => setShowMenu(false)}
+        />
+      )}
+
+      {/* Sidebar */}
       <div
-        className={`h-full w-72 top-0 flex flex-col z-50 text-gray-700 dark:text-gray-400 mb-10 rounded-e-2xl md:rounded-xl shadow-2xl transition-all duration-300 bg-gray-300 dark:bg-sidebar p-4 justify-between${
-          showMenu ? " left-0" : " -left-full"
-        } transition-all`}
+        className={`fixed xl:static top-0 left-0 h-full w-72 z-50 flex flex-col text-gray-700 dark:text-gray-400 rounded-e-2xl xl:rounded-xl shadow-2xl bg-gray-300 dark:bg-sidebar p-4 justify-between
+        transform transition-transform duration-300 ease-in-out
+        ${showMenu ? "translate-x-0" : "-translate-x-full"} xl:translate-x-0`}
       >
         <div>
           <h1 className="text-center text-2xl font-bold text-gray-700 dark:text-gray-400 mb-10">
@@ -44,9 +53,9 @@ export const Sidebar = () => {
                           <Icon iconName={item.icon} /> {item.title}
                         </span>
                         <RiIcons.RiArrowRightSLine
-                          className={`mt-1 ${
-                            showSubmenu === index && "rotate-90"
-                          } transition-all`}
+                          className={`mt-1 transition-all ${
+                            showSubmenu === index ? "rotate-90" : ""
+                          }`}
                         />
                       </button>
                       {showSubmenu === index && (
@@ -58,8 +67,11 @@ export const Sidebar = () => {
                               <li key={subIndex}>
                                 <Link
                                   to={subItem.path}
-                                  onClick={() => setActivePath(subItem.path)}
-                                  className={`py-2 px-4 ml-6 flex items-center gap-4 relative rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
+                                  onClick={() => {
+                                    setActivePath(subItem.path);
+                                    setShowMenu(false); // cerrar sidebar en móvil
+                                  }}
+                                  className={`py-2 px-4 ml-6 flex items-center gap-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
                                     isSubActive ? "bg-sidebar-accent" : ""
                                   }`}
                                 >
@@ -75,7 +87,10 @@ export const Sidebar = () => {
                   ) : (
                     <Link
                       to={item.path}
-                      onClick={() => setActivePath(item.path)}
+                      onClick={() => {
+                        setActivePath(item.path);
+                        setShowMenu(false); // cerrar sidebar en móvil
+                      }}
                       className={`flex items-center gap-4 py-2 px-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
                         isActive ? "bg-sidebar-accent" : ""
                       }`}
@@ -92,7 +107,10 @@ export const Sidebar = () => {
         <nav>
           <Link
             to="/"
-            onClick={() => setActivePath("/")}
+            onClick={() => {
+              setActivePath("/");
+              setShowMenu(false); // cerrar sidebar en móvil
+            }}
             className={`flex items-center gap-4 py-2 px-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
               activePath === "/" ? "bg-sidebar-accent" : ""
             }`}
@@ -103,12 +121,13 @@ export const Sidebar = () => {
         </nav>
       </div>
 
+      {/* Botón flotante para mostrar sidebar en móvil */}
       <button
         onClick={() => setShowMenu(!showMenu)}
         className="xl:hidden fixed bottom-4 right-4 bg-primary text-black p-3 rounded-full z-50"
       >
         {showMenu ? <RiIcons.RiCloseLine /> : <RiIcons.RiMenu3Line />}
       </button>
-    </>
+    </div>
   );
 };
