@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "../../../utils/cn";
 
 export const Button = ({
   children,
@@ -33,7 +33,7 @@ export const Button = ({
   return (
     <button
       {...props}
-      className={clsx(
+      className={cn(
         "rounded-lg font-semibold transition duration-200 cursor-pointer",
         sizeMap[size],
         variantMap[variant],

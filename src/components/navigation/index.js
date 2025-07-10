@@ -1,2 +1,2 @@
-export * from './Sidebar.jsx';
-export * from './TopBar.jsx';
+export * from './Sidebar';
+export * from './TopBar';

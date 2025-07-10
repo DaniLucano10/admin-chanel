@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "../../../utils/cn";
 
 export const IconButton = ({
   children,
@@ -42,7 +42,7 @@ export const IconButton = ({
   return (
     <button
       {...props}
-      className={clsx(
+      className={cn(
         "inline-flex items-center justify-center transition duration-200 cursor-pointer",
         sizeMap[size],
         variantMap[variant],

@@ -1,4 +1,4 @@
-import { clsx } from "clsx";
+import { cn } from "../../../utils/cn";
 import {
   RiAlertLine,
   RiCheckLine,
@@ -39,7 +39,7 @@ export const Alert = ({
 }) => {
   return (
     <div
-      className={clsx(
+      className={cn(
         "flex items-start gap-3 p-4 rounded-lg border border-black/10 dark:border-white/10",
         alertStyles[type],
         className

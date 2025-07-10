@@ -1,2 +1,2 @@
-export * from './Alert.jsx';
-export * from './ConfirmDeleteDialog.jsx';
+export * from './Alert';
+export * from './ConfirmDeleteDialog';

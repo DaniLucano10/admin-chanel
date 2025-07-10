@@ -34,5 +34,10 @@
     "title": "Calendario",
     "path": "/",
     "icon": "RiCalendarTodoLine"
+  },
+  {
+    "title": "Usuarios",
+    "path": "/users",
+    "icon": "RiGroupLine"
   }
 ]
