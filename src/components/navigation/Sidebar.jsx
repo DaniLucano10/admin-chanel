@@ -11,6 +11,7 @@ const Icon = ({ iconName }) => {
 export const Sidebar = () => {
   const [showSubmenu, setShowSubmenu] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
+  const [activePath, setActivePath] = useState(null);
 
   const handleSubmenu = (index) => {
     setShowSubmenu(showSubmenu === index ? null : index);
@@ -28,60 +29,80 @@ export const Sidebar = () => {
             Admin<span className="text-primary text-4xl">.</span>
           </h1>
           <ul>
-            {sidebarData.map((item, index) => (
-              <li key={index}>
-                {item.submenu ? (
-                  <>
-                    <button
-                      onClick={() => handleSubmenu(index)}
-                      className="w-full flex items-center justify-between py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
+            {sidebarData.map((item, index) => {
+              const isActive = activePath === item.path;
+
+              return (
+                <li key={index}>
+                  {item.submenu ? (
+                    <>
+                      <button
+                        onClick={() => handleSubmenu(index)}
+                        className="w-full flex items-center justify-between py-2 px-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent"
+                      >
+                        <span className="flex items-center gap-4">
+                          <Icon iconName={item.icon} /> {item.title}
+                        </span>
+                        <RiIcons.RiArrowRightSLine
+                          className={`mt-1 ${
+                            showSubmenu === index && "rotate-90"
+                          } transition-all`}
+                        />
+                      </button>
+                      {showSubmenu === index && (
+                        <ul className="py-2">
+                          {item.submenu.map((subItem, subIndex) => {
+                            const isSubActive = activePath === subItem.path;
+
+                            return (
+                              <li key={subIndex}>
+                                <Link
+                                  to={subItem.path}
+                                  onClick={() => setActivePath(subItem.path)}
+                                  className={`py-2 px-4 ml-6 flex items-center gap-4 relative rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
+                                    isSubActive ? "bg-sidebar-accent" : ""
+                                  }`}
+                                >
+                                  <Icon iconName={subItem.icon} />{" "}
+                                  {subItem.title}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      onClick={() => setActivePath(item.path)}
+                      className={`flex items-center gap-4 py-2 px-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
+                        isActive ? "bg-sidebar-accent" : ""
+                      }`}
                     >
-                      <span className="flex items-center gap-4">
-                        <Icon iconName={item.icon} /> {item.title}
-                      </span>
-                      <RiIcons.RiArrowRightSLine
-                        className={`mt-1 ${
-                          showSubmenu === index && "rotate-90"
-                        } transition-all`}
-                      />
-                    </button>
-                    {showSubmenu === index && (
-                      <ul className="py-2">
-                        {item.submenu.map((subItem, subIndex) => (
-                          <li key={subIndex}>
-                            <Link
-                              to={subItem.path}
-                              className="py-2 px-4 ml-6 flex items-center gap-4 relative  hover:text-white transition-colors"
-                            >
-                              <Icon iconName={subItem.icon} /> {subItem.title}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    to={item.path}
-                    className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
-                  >
-                    <Icon iconName={item.icon} /> {item.title}
-                  </Link>
-                )}
-              </li>
-            ))}
+                      <Icon iconName={item.icon} /> {item.title}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
+
         <nav>
           <Link
             to="/"
-            className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
+            onClick={() => setActivePath("/")}
+            className={`flex items-center gap-4 py-2 px-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
+              activePath === "/" ? "bg-sidebar-accent" : ""
+            }`}
           >
             <RiIcons.RiLogoutCircleRLine className="text-primary" /> Cerrar
             sesión
           </Link>
         </nav>
       </div>
+
       <button
         onClick={() => setShowMenu(!showMenu)}
         className="xl:hidden fixed bottom-4 right-4 bg-primary text-black p-3 rounded-full z-50"
