@@ -87,11 +87,11 @@ export const Pagination = ({
   let lastPage = paginationRange[paginationRange.length - 1];
 
   return (
-    <div className={cn("flex items-center justify-between", className)}>
+    <div className={cn("flex items-center flex-col md:flex-row justify-between", className)}>
       <p className="text-sm text-muted-foreground">
         Página {currentPage} de {lastPage}
       </p>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 overflow-x-auto max-w-full scrollbar-none px-1">
         <IconButton
           onClick={onPrevious}
           disabled={currentPage === 1}
