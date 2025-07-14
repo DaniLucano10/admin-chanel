@@ -1,43 +1,59 @@
 [
   {
+    "id": 1,
+    "route": "/admin/chat",
     "title": "Analíticas",
-    "path": "/chat",
-    "icon": "RiBarChart2Line"
+    "icon": "RiBarChart2Line",
+    "child": []
   },
   {
+    "id": 2,
+    "route": "/admin/users",
+    "title": "Usuarios",
+    "icon": "RiGroupLine",
+    "child": []
+  },
+  {
+    "id": 3,
+    "route": "/admin/networks",
     "title": "Redes sociales",
     "icon": "RiEarthLine",
-    "submenu": [
+    "child": [
       {
+        "id": 1,
+        "route": "/admin/networks/red",
         "title": "Post red social",
-        "path": "/",
-        "icon": "RiFileTextLine"
+        "icon": "RiFileTextLine",
+        "child": []
       },
       {
+        "id": 2,
+        "route": "/admin/networks/datos",
         "title": "Estadisticas",
-        "path": "/",
-        "icon": "RiBarChartFill"
+        "icon": "RiBarChartFill",
+        "child": []
       },
       {
+        "id": 3,
+        "route": "/admin/networks/profiles",
         "title": "Perfiles",
-        "path": "/",
-        "icon": "RiUser3Line"
+        "icon": "RiUser3Line",
+        "child": []
       }
     ]
   },
   {
+    "id": 4,
+    "route": "/admin/tickets",
     "title": "Mensajes",
-    "path": "/tickets",
-    "icon": "RiMessage3Line"
+    "icon": "RiMessage3Line",
+    "child": []
   },
   {
+    "id": 5,
+    "route": "/admin/",
     "title": "Calendario",
-    "path": "/",
-    "icon": "RiCalendarTodoLine"
-  },
-  {
-    "title": "Usuarios",
-    "path": "/users",
-    "icon": "RiGroupLine"
+    "icon": "RiCalendarTodoLine",
+    "child": []
   }
 ]
