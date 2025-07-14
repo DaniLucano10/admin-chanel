@@ -1,14 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AdminLayout } from "./layouts/AdminLayout";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ForgetPassword, Login, Register } from "./pages/auth";
 import { AuthLayout } from "./layouts/AuthLayout";
-import { Home } from "./pages/admin/Home";
-import { Chat } from "./pages/admin/Chat";
-import { Users } from "./pages/admin/Users";
+import { AdminLayout } from "./layouts/AdminLayout";
 import { Error404 } from "./pages/Error404";
-import { Login } from "./pages/auth/Login";
-import { Register } from "./pages/auth/Register";
-import { ForgetPassword } from "./pages/auth/ForgetPassword";
+import { Chat, Home, Users } from "./pages/admin";
 import { PrivateRoute } from "./PrivateRoute";
+
 
 function App() {
   return (
