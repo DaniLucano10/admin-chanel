@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RiLockLine, RiUserLine } from "react-icons/ri";
-import { Button, Input } from "../../components/ui";
+import { Alert, Button, Input } from "../../components/ui";
 import { useAuth } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -60,7 +60,7 @@ export const Login = () => {
             {loading ? "Cargando..." : "Iniciar Sesión"}
           </Button>
 
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <Alert type="error" message={error} />}
         </form>
       </div>
     </main>
