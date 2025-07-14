@@ -92,7 +92,7 @@ export const useAuth = () => {
       Cookies.remove(import.meta.env.VITE_US_COOKIE);
 
       setUser(null);
-      navigate("/auth/login");
+      navigate("/auth");
     } catch (err) {
       setError(err.response?.data?.message || "Error al cerrar sesión");
     }
