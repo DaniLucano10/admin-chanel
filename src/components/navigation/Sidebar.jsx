@@ -2,6 +2,7 @@ import * as RiIcons from "react-icons/ri";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import sidebarData from "../../data/sidebar.json";
+import { useAuth } from "../../hooks";
 
 const Icon = ({ iconName }) => {
   const IconComponent = RiIcons[iconName];
@@ -12,9 +13,16 @@ export const Sidebar = () => {
   const [showSubmenu, setShowSubmenu] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
   const [activePath, setActivePath] = useState(null);
+  const { logout, getUser } = useAuth();
+  const user = getUser();
+  console.log("user", user?.fullname)
 
   const handleSubmenu = (index) => {
     setShowSubmenu(showSubmenu === index ? null : index);
+  };
+
+  const handleLogout = () => {
+    logout(user.email);
   };
 
   return (
@@ -39,11 +47,11 @@ export const Sidebar = () => {
           </h1>
           <ul>
             {sidebarData.map((item, index) => {
-              const isActive = activePath === item.path;
+              const isActive = activePath === item.route;
 
               return (
                 <li key={index}>
-                  {item.submenu ? (
+                  {item.child && item.child.length > 0 ? (
                     <>
                       <button
                         onClick={() => handleSubmenu(index)}
@@ -60,16 +68,16 @@ export const Sidebar = () => {
                       </button>
                       {showSubmenu === index && (
                         <ul className="py-2">
-                          {item.submenu.map((subItem, subIndex) => {
-                            const isSubActive = activePath === subItem.path;
+                          {item.child.map((subItem, subIndex) => {
+                            const isSubActive = activePath === subItem.route;
 
                             return (
                               <li key={subIndex}>
                                 <Link
-                                  to={subItem.path}
+                                  to={subItem.route}
                                   onClick={() => {
-                                    setActivePath(subItem.path);
-                                    setShowMenu(false); // cerrar sidebar en móvil
+                                    setActivePath(subItem.route);
+                                    setShowMenu(false);
                                   }}
                                   className={`py-2 px-4 ml-6 flex items-center gap-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
                                     isSubActive ? "bg-sidebar-accent" : ""
@@ -86,10 +94,10 @@ export const Sidebar = () => {
                     </>
                   ) : (
                     <Link
-                      to={item.path}
+                      to={item.route}
                       onClick={() => {
-                        setActivePath(item.path);
-                        setShowMenu(false); // cerrar sidebar en móvil
+                        setActivePath(item.route);
+                        setShowMenu(false);
                       }}
                       className={`flex items-center gap-4 py-2 px-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
                         isActive ? "bg-sidebar-accent" : ""
@@ -106,17 +114,13 @@ export const Sidebar = () => {
 
         <nav>
           <Link
-            to="/"
-            onClick={() => {
-              setActivePath("/");
-              setShowMenu(false); // cerrar sidebar en móvil
-            }}
+            onClick={handleLogout} 
             className={`flex items-center gap-4 py-2 px-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
               activePath === "/" ? "bg-sidebar-accent" : ""
             }`}
           >
-            <RiIcons.RiLogoutCircleRLine className="text-primary" /> Cerrar
-            sesión
+            <RiIcons.RiLogoutCircleRLine className="text-primary" /> 
+            Cerrar sesión
           </Link>
         </nav>
       </div>
