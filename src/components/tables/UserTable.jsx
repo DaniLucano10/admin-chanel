@@ -14,7 +14,7 @@ import { es } from "date-fns/locale";
 
 const PAGE_SIZE = 5;
 
-export const UserTable = ({ users, currentPage, onPageChange }) => {
+export const UserTable = ({ users, currentPage, onPageChange, onEdit }) => {
   const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
   const lastPageIndex = firstPageIndex + PAGE_SIZE;
   const currentTableData = users.slice(firstPageIndex, lastPageIndex);
@@ -60,7 +60,7 @@ export const UserTable = ({ users, currentPage, onPageChange }) => {
               </TableCell>
               <TableCell>
                 <div className="flex gap-2">
-                  <IconButton variant="outline" size="sm">
+                  <IconButton variant="outline" size="sm" onClick={() => onEdit(user)}>
                     <RiEditLine />
                   </IconButton>
                   <IconButton variant="danger" size="sm">
