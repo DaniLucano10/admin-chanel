@@ -8,10 +8,9 @@ import {
   Pagination,
 } from "../ui/table";
 import { IconButton } from "../ui";
-import {
-  RiEditLine,
-  RiDeleteBinLine,
-} from "react-icons/ri";
+import { RiEditLine, RiDeleteBinLine } from "react-icons/ri";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 const PAGE_SIZE = 5;
 
@@ -19,16 +18,17 @@ export const UserTable = ({ users, currentPage, onPageChange }) => {
   const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
   const lastPageIndex = firstPageIndex + PAGE_SIZE;
   const currentTableData = users.slice(firstPageIndex, lastPageIndex);
+  console.log(users);
 
   return (
     <div className="w-[360px] md:w-full overflow-x-auto bg-gray-200 dark:bg-card p-4 rounded-lg shadow-md border border-border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>ID</TableHead>
+            <TableHead>N°</TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Rol</TableHead>
+            {/* <TableHead>Rol</TableHead> */}
             <TableHead>Estado</TableHead>
             <TableHead>Creado</TableHead>
             <TableHead>Acciones</TableHead>
@@ -38,21 +38,26 @@ export const UserTable = ({ users, currentPage, onPageChange }) => {
           {currentTableData.map((user) => (
             <TableRow key={user.id}>
               <TableCell>{user.id}</TableCell>
-              <TableCell className="font-medium">{user.name}</TableCell>
+              <TableCell className="font-medium">{user.fullname}</TableCell>
               <TableCell>{user.email}</TableCell>
-              <TableCell>{user.role}</TableCell>
+              {/* <TableCell>{user.role}</TableCell> */}
               <TableCell>
                 <span
                   className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                    user.status === "Active"
-                      ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                      : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+                    user.status === true
+                      ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 cursor-pointer"
+                      : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 cursor-pointer"
                   }`}
                 >
-                  {user.status}
+                  {user.status === true ? "Activo" : "Inactivo"}
                 </span>
               </TableCell>
-              <TableCell>{user.createdAt}</TableCell>
+
+              <TableCell>
+                {format(new Date(user.created_at), "dd/MM/yyyy hh:mm a", {
+                  locale: es,
+                })}
+              </TableCell>
               <TableCell>
                 <div className="flex gap-2">
                   <IconButton variant="outline" size="sm">

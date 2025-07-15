@@ -1,31 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
 import { Input, Button } from "../../components/ui";
 import { UserTable } from "../../components/tables/UserTable";
-
-// Datos simulados
-const usersData = Array.from({ length: 50 }, (_, i) => ({
-  id: i + 1,
-  name: `Usuario ${i + 1}`,
-  email: `usuario${i + 1}@example.com`,
-  role: i % 3 === 0 ? "Admin" : i % 2 === 0 ? "Editor" : "Viewer",
-  createdAt: new Date(
-    2023,
-    Math.floor(Math.random() * 12),
-    Math.floor(Math.random() * 28) + 1
-  ).toLocaleDateString(),
-  status: i % 4 === 0 ? "Inactive" : "Active",
-}));
+import { useFetchUsers } from "../../hooks";
 
 export const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredUsers = useMemo(() => {
-    return usersData.filter((user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [searchTerm]);
+  const { data, loading } = useFetchUsers();
 
   return (
     <div className="space-y-4 w-full">
@@ -43,12 +26,12 @@ export const Users = () => {
         </div>
         <Button variant="primary">Crear Usuario</Button>
       </div>
-
-      <UserTable
-        users={filteredUsers}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+        <UserTable
+          users={data}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      
     </div>
   );
 };
