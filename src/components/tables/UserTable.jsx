@@ -21,7 +21,6 @@ export const UserTable = ({ users, onActionClick, loading }) => {
   const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
   const lastPageIndex = firstPageIndex + PAGE_SIZE;
   const currentTableData = users.slice(firstPageIndex, lastPageIndex);
-  console.log(users);
 
   if (loading) {
     return (

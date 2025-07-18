@@ -5,3 +5,4 @@ export * from './input';
 export * from './table';
 export * from './modal';
 export * from './skeleton';
+export * from './toast';
