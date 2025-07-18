@@ -36,7 +36,7 @@ export const UserTable = ({
   }
 
   return (
-    <div className="w-[360px] md:w-full overflow-x-auto bg-gray-200 dark:bg-card p-4 rounded-lg shadow-md border border-border">
+    <div className="w-[360px] md:w-full scrollbar-thin overflow-auto   bg-gray-200 dark:bg-card p-4 rounded-lg shadow-md border border-border">
       <Table>
         <TableHeader>
           <TableRow>

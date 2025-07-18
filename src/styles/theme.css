@@ -107,3 +107,26 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+.scrollbar-thin::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+}
+
+/* Scroll vertical */
+.scrollbar-thin::-webkit-scrollbar-thumb:vertical {
+  background: var(--color-primary);
+  border-radius: 999px;
+}
+
+/* Scroll horizontal */
+.scrollbar-thin::-webkit-scrollbar-thumb:horizontal {
+  background: var(--color-primary);
+  border-radius: 999px;
+}
+
+/* Track (fondo del scroll) */
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: var(--color-muted);
+  border-radius: 999px;
+}
