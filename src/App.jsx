@@ -11,13 +11,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-         {/* Rutas públicas */}
+        {/* Rutas de autenticación */}
         <Route path="/auth" element={<AuthLayout />}>
           <Route index element={<Login />} />
+          <Route path="login" element={<Login />} />
           <Route path="registro" element={<Register />} />
           <Route path="olvide-password" element={<ForgetPassword />} />
         </Route>
-        
+
         {/* Rutas protegidas */}
         <Route
           path="/admin"
