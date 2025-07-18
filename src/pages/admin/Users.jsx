@@ -14,6 +14,7 @@ import {
   useUpdateUser,
   useDeleteUser,
   useShowToast,
+  useToggleUserStatus,
 } from "../../hooks";
 import { AddUserForm, EditUserForm } from "../../components";
 
@@ -26,7 +27,6 @@ export const Users = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
-  const { data, fetchUsers, loading } = useFetchUsers();
 
   const handleActionClick = (user, action) => {
     setSelectedItem(user);
@@ -41,6 +41,8 @@ export const Users = () => {
         break;
     }
   };
+
+  const { data, fetchUsers, loading } = useFetchUsers();
 
   const {
     register,
@@ -75,6 +77,13 @@ export const Users = () => {
     close: () => setOpenDeleteModal(false),
   });
 
+  const {
+    toggleStatus,
+    error: errorToggle,
+    success: successToggle,
+  } = useToggleUserStatus({
+    fetchUsers,
+  });
   const handleDelete = async (e) => {
     e.preventDefault();
     await deleteUser();
@@ -116,6 +125,18 @@ export const Users = () => {
     [successDelete, errorDelete]
   );
 
+  // Para cambiar estado
+  useShowToast(
+    successToggle,
+    errorToggle,
+    "Estado del usuario actualizado",
+    errorToggle,
+    setShowToast,
+    setToastMessage,
+    setToastType,
+    [successToggle, errorToggle]
+  );
+
   const handleCloseToast = () => {
     setShowToast(false);
     setTimeout(() => {
@@ -147,6 +168,10 @@ export const Users = () => {
         users={data}
         loading={loading}
         onActionClick={handleActionClick}
+        onToggleStatus={(user) => {
+          setSelectedItem(user);
+          toggleStatus(user.id);
+        }}
       />
 
       {/* Modales */}
