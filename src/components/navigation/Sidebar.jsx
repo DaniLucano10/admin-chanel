@@ -114,9 +114,10 @@ export const Sidebar = () => {
 
         <nav>
           <Link
-            onClick={handleLogout} 
+            to="/auth/login"
+            onClick={handleLogout}
             className={`flex items-center gap-4 py-2 px-4 rounded-lg transition-colors hover:bg-sidebar-accent active:bg-sidebar-accent ${
-              activePath === "/" ? "bg-sidebar-accent" : ""
+              activePath === "/login" ? "bg-sidebar-accent" : ""
             }`}
           >
             <RiIcons.RiLogoutCircleRLine className="text-primary" /> 

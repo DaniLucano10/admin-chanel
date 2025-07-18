@@ -156,7 +156,11 @@ export const TopBar = () => {
             </Link>
           </DropdownItem>
           <DropdownItem className="text-red-500 hover:bg-red-100 dark:hover:bg-red-900">
-            <Link onClick={handleLogout} className="flex items-center gap-x-4">
+            <Link
+              to="/auth/login"
+              onClick={handleLogout}
+              className="flex items-center gap-x-4"
+            >
               Cerrar sesión
             </Link>
           </DropdownItem>
