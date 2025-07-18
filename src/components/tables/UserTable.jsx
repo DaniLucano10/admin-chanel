@@ -8,7 +8,7 @@ import {
   Pagination,
   TableSkeleton,
 } from "../ui/table";
-import { IconButton } from "../ui";
+import { Button, IconButton } from "../ui";
 import { RiEditLine, RiDeleteBinLine } from "react-icons/ri";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -16,7 +16,12 @@ import { useState } from "react";
 
 const PAGE_SIZE = 5;
 
-export const UserTable = ({ users, onActionClick, loading }) => {
+export const UserTable = ({
+  users,
+  onActionClick,
+  loading,
+  onToggleStatus,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
   const lastPageIndex = firstPageIndex + PAGE_SIZE;
@@ -57,15 +62,17 @@ export const UserTable = ({ users, onActionClick, loading }) => {
                 <TableCell className="font-medium">{user.fullname}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <span
-                    className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                  <Button
+                    onClick={() => onToggleStatus(user)}
+                    disabled={loading}
+                    className={`px-4 py-2 text-xs font-semibold rounded-full ${
                       user.status === true
-                        ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 cursor-pointer"
-                        : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 cursor-pointer"
+                        ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 cursor-pointer hover:bg-green-500/30 dark:hover:bg-green-500/30"
+                        : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 cursor-pointer hover:bg-red-500/30 dark:hover:bg-red-500/30"
                     }`}
                   >
                     {user.status === true ? "Activo" : "Inactivo"}
-                  </span>
+                  </Button>
                 </TableCell>
                 <TableCell>
                   {format(new Date(user.created_at), "dd/MM/yyyy hh:mm a", {
