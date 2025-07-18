@@ -4,3 +4,4 @@ export * from './alert';
 export * from './input';
 export * from './table';
 export * from './modal';
+export * from './skeleton';
