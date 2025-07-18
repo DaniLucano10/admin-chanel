@@ -9,7 +9,7 @@ const schema = z.object({
   password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
 });
 
-export const AddUserForm = ({ onFormSubmit, loading, error, success }) => {
+export const AddUserForm = ({ onFormSubmit, loading }) => {
   const {
     register,
     handleSubmit,
@@ -26,8 +26,6 @@ export const AddUserForm = ({ onFormSubmit, loading, error, success }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-      {error && <Alert type="error" message={error} />}
-      {success && <Alert type="success" message={success} />}
       {/* Nombre */}
       <div>
         <label className="text-sm font-medium">Nombre completo</label>

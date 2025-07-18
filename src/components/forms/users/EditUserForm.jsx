@@ -1,58 +1,73 @@
-import React from 'react';
-import Form from '../Form'; // Reutilizamos el formulario genérico
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Input, Alert } from "../../ui";
+import { useEffect } from "react";
 
-// La definición de campos es la misma que para añadir un usuario,
-// pero a menudo para editar no se pide la contraseña o se maneja de forma diferente.
-// Por simplicidad, aquí la omitiremos.
-const userEditFields = [
-  {
-    name: 'name',
-    label: 'Nombre Completo',
-    type: 'text',
-    placeholder: 'Ej: John Doe',
-    required: true,
-  },
-  {
-    name: 'email',
-    label: 'Correo Electrónico',
-    type: 'email',
-    placeholder: 'Ej: john.doe@example.com',
-    required: true,
-  },
-  // Nota: Generalmente no se incluye el campo de contraseña en un formulario de edición
-  // a menos que se quiera cambiar. Se manejaría en un formulario separado de "Cambiar Contraseña".
-];
+const schema = z.object({
+  fullname: z.string().min(3, "El nombre es muy corto"),
+  email: z.string().email("Correo inválido"),
+});
 
-/**
- * Componente para editar un usuario existente.
- * @param {object} user - El objeto del usuario a editar.
- * @param {function} onFormSubmit - La función a llamar cuando el formulario se envía.
- */
-export const EditUserForm = ({ user, onFormSubmit }) => {
-  // El estado inicial se llena con los datos del usuario que se está editando.
-  const initialUserState = {
-    id: user.id, // Es importante mantener el ID
-    name: user.name,
-    email: user.email,
-  };
+export const EditUserForm = ({ user, onUpdate, loading }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      fullname: user?.fullname,
+      email: user?.email,
+    },
+  });
 
-  const handleEditUser = (formData) => {
-    console.log('Datos del usuario a actualizar:', formData);
-    // Aquí iría la lógica para enviar los datos a tu API (ej: PUT /api/users/{user.id})
-    alert(`Usuario actualizado (revisa la consola):\n${JSON.stringify(formData, null, 2)}`);
-    if (onFormSubmit) {
-      onFormSubmit(); // Cerramos el modal o actualizamos la UI
+  useEffect(() => {
+    if (user) {
+      reset({
+        fullname: user.fullname,
+        email: user.email,
+      });
     }
+  }, [user, reset]);
+
+  const onSubmit = (data) => {
+    onUpdate(user.id, data);
   };
 
   return (
-    <div>
-      <Form
-        initialState={initialUserState}
-        fields={userEditFields}
-        onSubmit={handleEditUser}
-        buttonText="Guardar Cambios"
-      />
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      {/* Nombre */}
+      <div>
+        <label className="text-sm font-medium">Nombre completo</label>
+        <Input {...register("fullname")} placeholder="Juan Pérez" />
+        {errors.fullname && (
+          <p className="text-red-500 text-sm mt-1">{errors.fullname.message}</p>
+        )}
+      </div>
+
+      {/* Email */}
+      <div>
+        <label className="text-sm font-medium">Correo electrónico</label>
+        <Input
+          {...register("email")}
+          type="email"
+          placeholder="correo@ejemplo.com"
+        />
+        {errors.email && (
+          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+        )}
+      </div>
+
+      <Button
+        type="submit"
+        variant="primary"
+        className="w-full"
+        disabled={loading}
+      >
+        {loading ? "Guardando..." : "Guardar Cambios"}
+      </Button>
+    </form>
   );
 };
