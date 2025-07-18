@@ -13,7 +13,7 @@ export const PrivateRoute = ({ children }) => {
   })();
 
   if (!token) {
-    return <Navigate to="/auth" replace />;
+    return <Navigate to="/auth/login" replace />;
   }
 
   return children;
