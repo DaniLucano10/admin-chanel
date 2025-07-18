@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { RiLockLine, RiUserLine } from "react-icons/ri";
+import {
+  RiLockLine,
+  RiUserLine,
+  RiEyeLine,
+  RiEyeOffLine,
+} from "react-icons/ri";
 import { Alert, Button, Input } from "../../components/ui";
 import { useAuth } from "../../hooks";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { login, loading, error } = useAuth();
   const navigate = useNavigate();
 
@@ -17,7 +23,7 @@ export const Login = () => {
   if (result?.access_token) {
     navigate("/admin");
   } else {
-    console.log("🚫 Error de login");
+    console.log("Error de login");
   }
 };
 
@@ -47,12 +53,19 @@ export const Login = () => {
             <div className="relative">
               <RiLockLine className="absolute top-1/2 -translate-y-1/2 left-3 text-muted-foreground" />
               <Input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="********"
-                className="pl-10"
+                className="pl-10 pr-10"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 -translate-y-1/2 right-3 text-muted-foreground"
+              >
+                {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
+              </button>
             </div>
           </div>
 
