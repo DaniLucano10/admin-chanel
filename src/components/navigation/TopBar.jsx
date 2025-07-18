@@ -112,12 +112,14 @@ export const TopBar = () => {
         <CustomDropdown
           trigger={
             <button className="flex items-center gap-x-3 hover:bg-secondary p-2 rounded-lg transition-colors">
-              {/* Imagen de perfil */}
-              <img
-                src="https://img.freepik.com/foto-gratis/feliz-joven_1098-20869.jpg"
-                className="w-8 h-8 object-cover rounded-full"
-                alt="avatar"
-              />
+              {/* Avatar con iniciales */}
+              <div className="w-8 h-8 bg-primary dark:bg-gray-700 text-white rounded-full flex items-center justify-center font-semibold text-sm uppercase">
+                {user?.username
+                  ?.split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .slice(0, 2)}
+              </div>
 
               {/* Nombre y correo */}
               <div className="flex flex-col text-left">
@@ -133,11 +135,7 @@ export const TopBar = () => {
           }
         >
           <DropdownItem>
-            <Link to="/perfil" className="flex items-center gap-x-4">
-              <img
-                src="https://img.freepik.com/foto-gratis/feliz-joven_1098-20869.jpg"
-                className="w-8 h-8 object-cover rounded-full"
-              />
+            <Link className="flex items-center gap-x-4">
               <div className="flex flex-col text-sm">
                 <span className="text-sm text-gray-700 dark:text-gray-300">
                   {user.username}
@@ -149,10 +147,10 @@ export const TopBar = () => {
           <DropdownSeparator />
           <DropdownItem>
             <Link
-              to="/configuracion"
+              to=""
               className="flex items-center gap-x-4 text-gray-700 dark:text-gray-300"
             >
-              Configuración
+              Perfil
             </Link>
           </DropdownItem>
           <DropdownItem className="text-red-500 hover:bg-red-100 dark:hover:bg-red-900">
