@@ -6,7 +6,7 @@ export const CustomDropdown = ({ trigger, children }) => {
       <DropdownMenu.Trigger asChild>{trigger}</DropdownMenu.Trigger>
 
       <DropdownMenu.Content
-        className="min-w-[250px] rounded-lg mt-4 bg-sidebar dark:bg-sidebar p-2 shadow-md z-50 translate-x-[-12px]"
+        className="min-w-[200px] rounded-lg mt-2 bg-sidebar dark:bg-sidebar p-2 shadow-md z-50"
         sideOffset={8}
       >
         {children}
