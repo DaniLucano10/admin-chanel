@@ -1,42 +1,50 @@
 import { useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
-import { Input, Button, Modal } from "../../components/ui";
+import { Input, Button, Modal, ConfirmDeleteDialog } from "../../components/ui";
 import { UserTable } from "../../components/tables/UserTable";
-import { useFetchUsers } from "../../hooks";
+import { useCreateUser, useFetchUsers } from "../../hooks";
 import { AddUserForm, EditUserForm } from "../../components";
 
 export const Users = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null); // Para saber si estamos editando o creando
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const { data } = useFetchUsers();
-
-  // Abre el modal para crear un nuevo usuario
-  const handleCreate = () => {
-    setCurrentUser(null);
-    setIsModalOpen(true);
+  const handleActionClick = (user, action) => {
+    setSelectedItem(user);
+    switch (action) {
+      case "edit":
+        setOpenEditModal(true);
+        break;
+      case "delete":
+        setOpenDeleteModal(true);
+        break;
+      default:
+        break;
+    }
   };
 
-  // Abre el modal para editar un usuario existente
-  const handleEdit = (user) => {
-    setCurrentUser(user);
-    setIsModalOpen(true);
-  };
+  const { data, fetchUsers, loading } = useFetchUsers();
 
-  // Cierra el modal y resetea el estado
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setCurrentUser(null);
-  };
+  const {
+    register,
+    loading: loadingRegister,
+    error: errorRegister,
+    success: successRegister,
+    setError: setErrorRegister,
+  } = useCreateUser({
+    fetch: fetchUsers,
+    close: () => setOpenAddModal(false),
+  });
 
   return (
     <div className="space-y-4 w-full">
       <h1 className="text-2xl text-black dark:text-white font-bold">
         Lista de Usuarios
       </h1>
-
       <div className="flex justify-between items-center flex-wrap gap-4">
         <div className="relative w-full max-w-sm">
           <RiSearchLine className="absolute top-1/2 -translate-y-1/2 left-3 text-muted-foreground" />
@@ -47,28 +55,45 @@ export const Users = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Button variant="primary" onClick={handleCreate}>
+        <Button variant="primary" onClick={() => setOpenAddModal(true)}>
           Crear Usuario
         </Button>
       </div>
       <UserTable
         users={data}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-        onEdit={handleEdit}
+        onActionClick={handleActionClick}
+        loading={loading}
       />
+      //Modales
       <Modal
-        size="2xl"
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        title={currentUser ? "Editar Usuario" : "Añadir Nuevo Usuario"}
+        size="lg"
+        open={openAddModal}
+        onOpenChange={() => {
+          setOpenAddModal(false);
+          setErrorRegister(null);
+        }}
+        title="Añadir Nuevo Usuario"
       >
-        {currentUser ? (
-          <EditUserForm user={currentUser} onFormSubmit={closeModal} />
-        ) : (
-          <AddUserForm onFormSubmit={closeModal} />
-        )}
+        <AddUserForm
+          onFormSubmit={(formData) => register(formData)}
+          loading={loadingRegister}
+          error={errorRegister}
+          success={successRegister}
+        />
       </Modal>
+      <Modal
+        size="lg"
+        open={openEditModal}
+        onOpenChange={setOpenEditModal}
+        title="Editar Usuario"
+      >
+        <EditUserForm user={selectedItem} onFormSubmit={() => {}} />
+      </Modal>
+      <ConfirmDeleteDialog
+        open={openDeleteModal}
+        onOpenChange={setOpenDeleteModal}
+        onConfirm={() => console.log("Eliminando usuario:", selectedItem)}
+      />
     </div>
   );
 };
