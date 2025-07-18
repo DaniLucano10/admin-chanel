@@ -1,8 +1,20 @@
 import { useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
-import { Input, Button, Modal, ConfirmDeleteDialog } from "../../components/ui";
+import {
+  Input,
+  Button,
+  Modal,
+  ConfirmDeleteDialog,
+  Toast,
+} from "../../components/ui";
 import { UserTable } from "../../components/tables/UserTable";
-import { useCreateUser, useFetchUsers } from "../../hooks";
+import {
+  useCreateUser,
+  useFetchUsers,
+  useUpdateUser,
+  useDeleteUser,
+  useShowToast,
+} from "../../hooks";
 import { AddUserForm, EditUserForm } from "../../components";
 
 export const Users = () => {
@@ -10,8 +22,11 @@ export const Users = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
   const [searchTerm, setSearchTerm] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
+  const { data, fetchUsers, loading } = useFetchUsers();
 
   const handleActionClick = (user, action) => {
     setSelectedItem(user);
@@ -27,8 +42,6 @@ export const Users = () => {
     }
   };
 
-  const { data, fetchUsers, loading } = useFetchUsers();
-
   const {
     register,
     loading: loadingRegister,
@@ -39,6 +52,77 @@ export const Users = () => {
     fetch: fetchUsers,
     close: () => setOpenAddModal(false),
   });
+
+  const {
+    update,
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = useUpdateUser({
+    id: selectedItem?.id,
+    fetch: fetchUsers,
+    close: () => setOpenEditModal(false),
+  });
+
+  const {
+    remove: deleteUser,
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = useDeleteUser({
+    id: selectedItem?.id,
+    fetch: fetchUsers,
+    close: () => setOpenDeleteModal(false),
+  });
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    await deleteUser();
+  };
+
+  // Para crear usuario
+  useShowToast(
+    successRegister,
+    errorRegister,
+    "Usuario creado correctamente",
+    errorRegister,
+    setShowToast,
+    setToastMessage,
+    setToastType,
+    [successRegister, errorRegister]
+  );
+
+  // Para editar usuario
+  useShowToast(
+    successUpdate,
+    errorUpdate,
+    "Usuario actualizado correctamente",
+    errorUpdate,
+    setShowToast,
+    setToastMessage,
+    setToastType,
+    [successUpdate, errorUpdate]
+  );
+
+  // Para eliminar usuario
+  useShowToast(
+    successDelete,
+    errorDelete,
+    "Usuario eliminado correctamente",
+    errorDelete,
+    setShowToast,
+    setToastMessage,
+    setToastType,
+    [successDelete, errorDelete]
+  );
+
+  const handleCloseToast = () => {
+    setShowToast(false);
+    setTimeout(() => {
+      setToastMessage("");
+      setToastType("success");
+    }, 300);
+  };
 
   return (
     <div className="space-y-4 w-full">
@@ -61,10 +145,11 @@ export const Users = () => {
       </div>
       <UserTable
         users={data}
-        onActionClick={handleActionClick}
         loading={loading}
+        onActionClick={handleActionClick}
       />
-      //Modales
+
+      {/* Modales */}
       <Modal
         size="lg"
         open={openAddModal}
@@ -77,23 +162,37 @@ export const Users = () => {
         <AddUserForm
           onFormSubmit={(formData) => register(formData)}
           loading={loadingRegister}
-          error={errorRegister}
-          success={successRegister}
         />
       </Modal>
+
       <Modal
         size="lg"
         open={openEditModal}
         onOpenChange={setOpenEditModal}
         title="Editar Usuario"
       >
-        <EditUserForm user={selectedItem} onFormSubmit={() => {}} />
+        <EditUserForm
+          user={selectedItem}
+          onUpdate={update}
+          loading={loadingUpdate}
+        />
       </Modal>
+
       <ConfirmDeleteDialog
         open={openDeleteModal}
         onOpenChange={setOpenDeleteModal}
-        onConfirm={() => console.log("Eliminando usuario:", selectedItem)}
+        onConfirm={handleDelete}
+        title="Confirmar Eliminación"
+        message={`¿Estás seguro de que deseas eliminar a ${selectedItem?.fullname}?`}
+        loading={loadingDelete}
       />
+      {showToast && (
+        <Toast
+          type={toastType}
+          message={toastMessage}
+          onClose={handleCloseToast}
+        />
+      )}
     </div>
   );
 };
