@@ -1,69 +1,72 @@
-import React from 'react';
-import Form from '../Form'; // Importamos el formulario genérico
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Input, Alert } from "../../ui";
 
-// Definición de los campos para el formulario de creación de usuarios
-const userFields = [
-  {
-    name: 'name',
-    label: 'Nombre Completo',
-    type: 'text',
-    placeholder: 'Ej: John Doe',
-    required: true,
-  },
-  {
-    name: 'email',
-    label: 'Correo Electrónico',
-    type: 'email',
-    placeholder: 'Ej: john.doe@example.com',
-    required: true,
-  },
-  {
-    name: 'password',
-    label: 'Contraseña',
-    type: 'password',
-    placeholder: 'Ingrese una contraseña segura',
-    required: true,
-  },
-  // Puedes agregar más campos aquí según tus necesidades
-  // Por ejemplo, un campo para el rol del usuario:
-  // {
-  //   name: 'role',
-  //   label: 'Rol',
-  //   type: 'text', // O podría ser un 'select' si creas un componente para ello
-  //   placeholder: 'Ej: admin, user, editor',
-  //   required: true,
-  // }
-];
+const schema = z.object({
+  fullname: z.string().min(3, "El nombre es muy corto"),
+  email: z.string().email("Correo inválido"),
+  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+});
 
-// Estado inicial para el formulario de usuarios
-const initialUserState = {
-  name: '',
-  email: '',
-  password: '',
-  // role: '',
-};
+export const AddUserForm = ({ onFormSubmit, loading, error, success }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
 
-export const AddUserForm = ({ onFormSubmit }) => {
-  // Esta función se ejecutará al enviar el formulario
-  const handleAddUser = (formData) => {
-    console.log('Datos del nuevo usuario:', formData);
-    // Aquí iría la lógica para enviar los datos a tu API,
-    // mostrar una alerta de éxito/error, y posiblemente
-    // cerrar un modal y refrescar la tabla de usuarios.
-    alert(`Usuario creado (revisa la consola):\n${JSON.stringify(formData, null, 2)}`);
-    if (onFormSubmit) {
-      onFormSubmit();
-    }
+  const onSubmit = (data) => {
+    onFormSubmit?.(data);
+    reset();
   };
 
   return (
-    <div>
-      <Form
-        initialState={initialUserState}
-        fields={userFields}
-        onSubmit={handleAddUser}
-        buttonText="Crear Usuario"
-      />
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      {error && <Alert type="error" message={error} />}
+      {success && <Alert type="success" message={success} />}
+      {/* Nombre */}
+      <div>
+        <label className="text-sm font-medium">Nombre completo</label>
+        <Input {...register("fullname")} placeholder="Juan Pérez" />
+        {errors.fullname && (
+          <p className="text-red-500 text-sm mt-1">{errors.fullname.message}</p>
+        )}
+      </div>
+
+      {/* Email */}
+      <div>
+        <label className="text-sm font-medium">Correo electrónico</label>
+        <Input
+          {...register("email")}
+          type="email"
+          placeholder="correo@ejemplo.com"
+        />
+        {errors.email && (
+          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+        )}
+      </div>
+
+      {/* Contraseña */}
+      <div>
+        <label className="text-sm font-medium">Contraseña</label>
+        <Input {...register("password")} type="password" placeholder="••••••" />
+        {errors.password && (
+          <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+        )}
+      </div>
+
+      <Button
+        type="submit"
+        variant="primary"
+        className="w-full"
+        disabled={loading}
+      >
+        {loading ? "Registrando..." : "Crear Usuario"}
+      </Button>
+    </form>
   );
 };
