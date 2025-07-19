@@ -18,11 +18,10 @@ const iconPacks = {
   ...HiIcons,
 };
 
-
-const Icon = ({ iconName }) => {
+const Icon = ({ iconName, size = 20 }) => {
   const IconComponent = iconPacks[iconName];
-  if (!IconComponent) return null; 
-  return <IconComponent className="text-primary" />;
+  if (!IconComponent) return null;
+  return <IconComponent className="text-primary" size={size} />;
 };
 
 export const Sidebar = () => {
@@ -56,15 +55,15 @@ export const Sidebar = () => {
       {/* Sidebar */}
       <div
         className={`fixed xl:static top-0 left-0 h-full ${
-          isCollapsed ? "w-24" : "w-64"
-        } z-50 flex flex-col text-gray-700 dark:text-gray-400 rounded-e-2xl xl:rounded-xl shadow-2xl bg-gray-300 dark:bg-sidebar p-4 justify-between transform transition-all duration-300 ease-in-out ${
+          isCollapsed ? "w-20" : "w-auto min-w-max"
+        } z-[100] flex flex-col text-gray-700 dark:text-gray-400 rounded-e-2xl xl:rounded-xl shadow-2xl bg-gray-300 dark:bg-sidebar p-4 justify-between transform transition-all duration-300 ease-in-out ${
           showMenu ? "translate-x-0" : "-translate-x-full"
         } xl:translate-x-0`}
       >
         {/* Botón de colapsar */}
         <button
           onClick={() => setIsCollapsed((prev) => !prev)}
-          className="absolute top-4 right-[-16px] bg-accent p-1.5 rounded-lg z-50 shadow-lg"
+          className="absolute top-4 right-[-18px] bg-accent p-1.5 rounded-lg z-50 shadow-lg"
         >
           {isCollapsed ? (
             <HiOutlineChevronDoubleRight size={20} />
@@ -80,17 +79,19 @@ export const Sidebar = () => {
               isCollapsed ? "justify-center" : ""
             }`}
           >
-            {isCollapsed ? (
-              // Icono o abreviatura cuando está colapsado
-              <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
-                A
-              </div>
-            ) : (
-              // Título completo cuando está expandido
-              <h1 className="text-2xl font-bold text-gray-700 dark:text-gray-400">
-                Admin<span className="text-primary text-4xl">.</span>
-              </h1>
-            )}
+            <Link to="/admin" className="flex items-center gap-4">
+              {isCollapsed ? (
+                // Icono o abreviatura cuando está colapsado
+                <div className="bg-accent text-accent-foreground rounded-lg w-10 h-10 flex items-center justify-center font-bold text-xl">
+                  A
+                </div>
+              ) : (
+                // Título completo cuando está expandido
+                <h1 className="text-2xl font-bold text-gray-700 dark:text-gray-400">
+                  Admin<span className="text-primary text-4xl">.</span>
+                </h1>
+              )}
+            </Link>
           </div>
 
           {/* Menú principal */}
@@ -99,7 +100,7 @@ export const Sidebar = () => {
               const isActive = activePath === item.route;
 
               return (
-                <li key={index}>
+                <li key={index} className="mb-2 relative">
                   {item.child && item.child.length > 0 ? (
                     <>
                       <button
@@ -109,7 +110,10 @@ export const Sidebar = () => {
                         }`}
                       >
                         <span className="flex items-center gap-4">
-                          <Icon iconName={item.icon} />
+                          <Icon
+                            iconName={item.icon}
+                            size={isCollapsed ? 24 : 20}
+                          />
                           {showText && <span>{item.title}</span>}
                         </span>
                         {showText && (
@@ -123,15 +127,14 @@ export const Sidebar = () => {
 
                       {/* Submenú lateral cuando está colapsado */}
                       {isCollapsed && showSubmenu === index && (
-                        <ul className="fixed top-0 left-16 h-full bg-gray-800 dark:bg-sidebar shadow-lg z-50 p-2 min-w-[160px]">
+                        <ul className="absolute left-18 top-0 bg-gray-300 dark:bg-sidebar shadow-xl z-[999] p-2 min-w-[200px] rounded-lg">
                           {item.child.map((subItem, subIndex) => (
-                            <li key={subIndex}>
+                            <li key={subIndex} className="mb-1">
                               <Link
                                 to={subItem.route}
                                 onClick={() => {
                                   setActivePath(subItem.route);
                                   setShowMenu(false);
-                                  setIsCollapsed(false);
                                 }}
                                 className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-sidebar-accent"
                               >
@@ -145,19 +148,19 @@ export const Sidebar = () => {
 
                       {/* Submenú normal cuando está expandido */}
                       {!isCollapsed && showSubmenu === index && (
-                        <ul className="py-2">
+                        <ul className="py-2 pl-6">
                           {item.child.map((subItem, subIndex) => {
                             const isSubActive = activePath === subItem.route;
 
                             return (
-                              <li key={subIndex}>
+                              <li key={subIndex} className="mb-1">
                                 <Link
                                   to={subItem.route}
                                   onClick={() => {
                                     setActivePath(subItem.route);
                                     setShowMenu(false);
                                   }}
-                                  className={`py-2 px-4 ml-6 flex items-center gap-4 rounded-lg transition-colors hover:bg-sidebar-accent ${
+                                  className={`py-2 px-4 flex items-center gap-4 rounded-lg transition-colors hover:bg-sidebar-accent ${
                                     isSubActive ? "bg-sidebar-accent" : ""
                                   }`}
                                 >
@@ -181,7 +184,10 @@ export const Sidebar = () => {
                         isActive ? "bg-sidebar-accent" : ""
                       } ${isCollapsed ? "justify-center" : ""}`}
                     >
-                      <Icon iconName={item.icon} />
+                      <Icon
+                        iconName={item.icon}
+                        size={isCollapsed ? 24 : 20}
+                      />
                       {showText && <span>{item.title}</span>}
                     </Link>
                   )}
@@ -200,7 +206,10 @@ export const Sidebar = () => {
               activePath === "/login" ? "bg-sidebar-accent" : ""
             } ${isCollapsed ? "justify-center" : ""}`}
           >
-            <Icon iconName="RiLogoutCircleRLine" />
+            <Icon
+              iconName="RiLogoutCircleRLine"
+              size={isCollapsed ? 24 : 20}
+            />
             {showText && "Cerrar sesión"}
           </Link>
         </nav>
