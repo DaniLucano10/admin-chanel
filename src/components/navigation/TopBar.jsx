@@ -27,8 +27,7 @@ export const TopBar = () => {
   };
 
   return (
-    <header className="w-full h-[75px] flex items-center justify-between gap-4 px-4 bg-gray-200 dark:bg-sidebar text-gray-700 dark:text-gray-400 rounded-b-xl md:rounded-xl">
-      {/* Logo o título (opcional para mobile) */}
+    <header className="w-full flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-gray-200 dark:bg-sidebar text-gray-700 dark:text-gray-400 rounded-b-xl md:rounded-xl">
       <div className="md:hidden font-bold text-lg text-primary">Admin</div>
 
       <nav className="flex items-center gap-2 sm:gap-4 ml-auto">
@@ -122,11 +121,13 @@ export const TopBar = () => {
               </div>
 
               {/* Nombre y correo */}
-              <div className="flex flex-col text-left">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <div className="hidden md:flex flex-col text-left min-w-0">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
                   {user?.username}
                 </span>
-                <span className="text-xs text-gray-500">{user?.email}</span>
+                <span className="text-xs text-gray-500 truncate">
+                  {user?.email}
+                </span>
               </div>
 
               {/* Flecha */}
