@@ -153,7 +153,7 @@ export const Sidebar = () => {
           {/* Botón de colapsar */}
           <button
             onClick={() => setIsCollapsed((prev) => !prev)}
-            className="absolute top-4 right-[-18px] bg-accent p-1.5 rounded-lg z-50 shadow-lg"
+            className="hidden xl:block absolute top-4 right-[-18px] bg-accent p-1.5 rounded-lg z-50 shadow-lg"
           >
             {isCollapsed ? (
               <HiOutlineChevronDoubleRight size={20} />
