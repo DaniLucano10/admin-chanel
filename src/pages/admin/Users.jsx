@@ -146,20 +146,20 @@ export const Users = () => {
   };
 
   const filteredUsers = data?.filter((user) => {
-  const term = searchTerm.toLowerCase();
-  return (
-    user.fullname?.toLowerCase().includes(term) ||
-    user.email?.toLowerCase().includes(term)
-  );
-});
+    const term = searchTerm.toLowerCase();
+    return (
+      user.fullname?.toLowerCase().includes(term) ||
+      user.email?.toLowerCase().includes(term)
+    );
+  });
 
   return (
     <div className="space-y-4 w-full">
       {/* <h1 className="text-2xl text-black dark:text-white font-bold">
         Lista de Usuarios
       </h1> */}
-      <div className="flex justify-between items-center flex-wrap gap-4">
-        <div className="relative w-full max-w-sm">
+      <div className="flex flex-col p-2 md:p-0 md:flex-row md:items-center md:justify-between gap-4 w-full">
+        <div className="relative w-full">
           <RiSearchLine className="absolute top-1/2 -translate-y-1/2 left-3 text-muted-foreground" />
           <Input
             placeholder="Buscar usuario..."
@@ -168,10 +168,17 @@ export const Users = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Button variant="primary" onClick={() => setOpenAddModal(true)}>
-          Crear Usuario
-        </Button>
+        <div className="w-full md:w-auto">
+          <Button
+            className="w-full md:w-64"
+            variant="primary"
+            onClick={() => setOpenAddModal(true)}
+          >
+            Crear Usuario
+          </Button>
+        </div>
       </div>
+
       <UserTable
         users={filteredUsers}
         loading={loading}
