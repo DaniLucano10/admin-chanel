@@ -12,7 +12,7 @@ import { Button, IconButton } from "../ui";
 import { RiEditLine, RiDeleteBinLine } from "react-icons/ri";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PAGE_SIZE = 5;
 
@@ -23,8 +23,25 @@ export const UserTable = ({
   onToggleStatus,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
-  const lastPageIndex = firstPageIndex + PAGE_SIZE;
+  const [pageSize, setPageSize] = useState(10);
+  // Detectar si es móvil
+  useEffect(() => {
+    const checkIsMobile = () => {
+      if (window.innerWidth < 768) {
+        setPageSize(5); // mobile
+      } else {
+        setPageSize(8); // desktop
+      }
+    };
+
+    checkIsMobile(); // llamada inicial
+
+    // Listener para cambios de tamaño
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+  const firstPageIndex = (currentPage - 1) * pageSize;
+  const lastPageIndex = firstPageIndex + pageSize;
   const currentTableData = users.slice(firstPageIndex, lastPageIndex);
 
   if (loading) {
