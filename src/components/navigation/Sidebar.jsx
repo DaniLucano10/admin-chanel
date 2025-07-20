@@ -120,10 +120,15 @@ export const Sidebar = () => {
                   onClick={() => {
                     setActivePath(subItem.route);
                     setShowMenu(false);
-                    setSubmenuPortal({ show: false, x: 0, y: 0, content: null });
+                    setSubmenuPortal({
+                      show: false,
+                      x: 0,
+                      y: 0,
+                      content: null,
+                    });
                     setShowSubmenu(null);
                   }}
-                  className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-sidebar-accent"
+                  className="flex text-black dark:text-white items-center gap-4 py-2 px-4 rounded-lg hover:bg-sidebar-accent"
                 >
                   <Icon iconName={subItem.icon} size={20} />
                   <span>{subItem.title}</span>
@@ -145,7 +150,7 @@ export const Sidebar = () => {
         {/* Sidebar */}
         <div
           className={`fixed xl:static top-0 left-0 h-full ${
-            isCollapsed ? "w-20" : "w-auto min-w-max"
+            isCollapsed ? "w-20" : "w-60 md:w-72"
           } z-[100] flex flex-col text-gray-700 dark:text-gray-400 rounded-e-2xl xl:rounded-xl shadow-2xl bg-gray-300 dark:bg-sidebar p-4 justify-between transform transition-all duration-300 ease-in-out ${
             showMenu ? "translate-x-0" : "-translate-x-full"
           } xl:translate-x-0`}
@@ -222,8 +227,7 @@ export const Sidebar = () => {
                         {!isCollapsed && showSubmenu === index && (
                           <ul className="py-2 pl-6">
                             {item.child.map((subItem, subIndex) => {
-                              const isSubActive =
-                                activePath === subItem.route;
+                              const isSubActive = activePath === subItem.route;
 
                               return (
                                 <li key={subIndex} className="mb-1">
