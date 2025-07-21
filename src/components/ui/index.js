@@ -6,3 +6,4 @@ export * from './table';
 export * from './modal';
 export * from './skeleton';
 export * from './toast';
+export * from './select';
