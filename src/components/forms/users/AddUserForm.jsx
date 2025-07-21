@@ -1,8 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Alert } from "../../ui";
-import CountrySelect from "../../ui/select/CountrySelect";
+import { Button, CountrySelect, Input } from "../../ui";
 import { useFetchCountry } from "../../../hooks";
 
 const schema = z.object({
