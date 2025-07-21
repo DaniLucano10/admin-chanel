@@ -55,5 +55,27 @@
     "title": "Calendario",
     "icon": "RiCalendarTodoLine",
     "child": []
+  },
+  {
+    "id": 6,
+    "route": "/admin/analytics",
+    "title": "Analíticas",
+    "icon": "RiBarChart2Line",
+    "child": []
+  },
+  {
+    "id": 7,
+    "route": "/admin/settings",
+    "title": "Configuración",
+    "icon": "RiSettings3Line",
+    "child": [
+      {
+        "id": 1,
+        "route": "/admin/settings/country",
+        "title": "País",
+        "icon": "RiMapPinLine",
+        "child": []
+      }
+    ]
   }
 ]
