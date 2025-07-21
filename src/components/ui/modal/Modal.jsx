@@ -19,7 +19,7 @@ export const Modal = ({ open, onOpenChange, title, children, size = 'md' }) => {
           className={cn(
             "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
             "w-[90vw] max-h-[85vh] p-6",
-            "bg-card text-card-foreground rounded-lg shadow-lg border",
+            "bg-card text-card-foreground rounded-lg shadow-xl",
             "focus:outline-none z-50",
             sizeMap[size],
             "data-[state=open]:animate-contentShow"
