@@ -152,7 +152,7 @@ export const Users = () => {
       user.email?.toLowerCase().includes(term)
     );
   });
-
+console.log(filteredUsers)
   return (
     <div className="space-y-4 w-full">
       {/* <h1 className="text-2xl text-black dark:text-white font-bold">
