@@ -30,7 +30,7 @@ export const UserTable = ({
       if (window.innerWidth < 768) {
         setPageSize(5); // mobile
       } else {
-        setPageSize(8); // desktop
+        setPageSize(7); // desktop
       }
     };
 
@@ -40,6 +40,7 @@ export const UserTable = ({
     window.addEventListener("resize", checkIsMobile);
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
+
   const firstPageIndex = (currentPage - 1) * pageSize;
   const lastPageIndex = firstPageIndex + pageSize;
   const currentTableData = users.slice(firstPageIndex, lastPageIndex);
@@ -60,6 +61,7 @@ export const UserTable = ({
             <TableHead>N°</TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead>Email</TableHead>
+            <TableHead>País</TableHead>
             <TableHead>Estado</TableHead>
             <TableHead>Creado</TableHead>
             <TableHead>Acciones</TableHead>
@@ -78,6 +80,7 @@ export const UserTable = ({
                 <TableCell>{index + 1}</TableCell>
                 <TableCell className="font-medium">{user.fullname}</TableCell>
                 <TableCell>{user.email}</TableCell>
+                <TableCell>{user.country?.name}</TableCell>
                 <TableCell>
                   <Button
                     onClick={() => onToggleStatus(user)}

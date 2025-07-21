@@ -36,16 +36,28 @@ export const AddUserForm = ({ onFormSubmit, loading }) => {
       </div>
 
       {/* Email */}
-      <div>
-        <label className="text-sm font-medium">Correo electrónico</label>
-        <Input
-          {...register("email")}
-          type="email"
-          placeholder="correo@ejemplo.com"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-        )}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-2">
+        <div className="w-full md:w-1/2">
+          <label className="text-sm font-medium">Correo electrónico</label>
+          <Input
+            {...register("email")}
+            type="email"
+            placeholder="correo@ejemplo.com"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
+        </div>
+        <div className="w-full md:w-1/2">
+          <label className="text-sm font-medium">País</label>
+          <Input
+            {...register("country")}  />
+          {errors.country && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.country.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Contraseña */}
