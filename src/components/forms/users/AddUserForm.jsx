@@ -1,20 +1,27 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Alert } from "../../ui";
+import CountrySelect from "../../ui/select/CountrySelect";
+import { useFetchCountry } from "../../../hooks";
 
 const schema = z.object({
   fullname: z.string().min(3, "El nombre es muy corto"),
   email: z.string().email("Correo inválido"),
   password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+  country_id: z.number().min(1, "Debes seleccionar un país"),
 });
 
 export const AddUserForm = ({ onFormSubmit, loading }) => {
+
+  const { loading: loadingCountry, data: dataCountries } = useFetchCountry();
+  console.log("Paises", dataCountries);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -22,6 +29,7 @@ export const AddUserForm = ({ onFormSubmit, loading }) => {
   const onSubmit = (data) => {
     onFormSubmit?.(data);
     reset();
+    console.log("datos enviados", data);
   };
 
   return (
@@ -50,11 +58,22 @@ export const AddUserForm = ({ onFormSubmit, loading }) => {
         </div>
         <div className="w-full md:w-1/2">
           <label className="text-sm font-medium">País</label>
-          <Input
-            {...register("country")}  />
-          {errors.country && (
+          <Controller
+            name="country_id"
+            control={control}
+            render={({ field }) => (
+              <CountrySelect
+                options={dataCountries}
+                value={field.value}
+                onChange={(option) => field.onChange(option.id)}
+                placeholder={loadingCountry ? "Cargando países..." : "Selecciona un país"}
+                disabled={loadingCountry}
+              />
+            )}
+          />
+          {errors.country_id && (
             <p className="text-red-500 text-sm mt-1">
-              {errors.country.message}
+              {errors.country_id.message}
             </p>
           )}
         </div>
