@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 
 const PAGE_SIZE = 5;
 
-export const CountryTable = ({ data, loading }) => {
+export const CountryTable = ({ data, loading, onActionClick }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   // Detectar si es móvil
@@ -74,10 +74,18 @@ export const CountryTable = ({ data, loading }) => {
                 <TableCell>{country.dial_code}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <IconButton variant="outline" size="sm" onClick={false}>
+                    <IconButton
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onActionClick(country, "edit")}
+                    >
                       <RiEditLine />
                     </IconButton>
-                    <IconButton variant="danger" size="sm" onClick={false}>
+                    <IconButton
+                      variant="danger"
+                      size="sm"
+                      onClick={() => onActionClick(country, "delete")}
+                    >
                       <RiDeleteBinLine />
                     </IconButton>
                   </div>
