@@ -37,11 +37,11 @@ export const Country = () => {
 
   const { data, fetchCountries, loading } = useFetchCountry();
 
-  const filteredCountries = data?.filter((user) => {
+  const filteredCountries = data?.filter((country) => {
     const term = searchTerm.toLowerCase();
     return (
-      user.name?.toLowerCase().includes(term) ||
-      user.dial_code?.toLowerCase().includes(term)
+      country.name?.toLowerCase().includes(term) ||
+      country.dial_code?.toLowerCase().includes(term)
     );
   });
 
