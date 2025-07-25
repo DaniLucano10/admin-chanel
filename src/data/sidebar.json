@@ -15,56 +15,6 @@
   },
   {
     "id": 3,
-    "route": "/admin/networks",
-    "title": "Redes sociales",
-    "icon": "RiEarthLine",
-    "child": [
-      {
-        "id": 1,
-        "route": "/admin/networks/red",
-        "title": "Post red social",
-        "icon": "RiFileTextLine",
-        "child": []
-      },
-      {
-        "id": 2,
-        "route": "/admin/networks/datos",
-        "title": "Estadisticas",
-        "icon": "RiBarChartFill",
-        "child": []
-      },
-      {
-        "id": 3,
-        "route": "/admin/networks/profiles",
-        "title": "Perfiles",
-        "icon": "RiUser3Line",
-        "child": []
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "route": "/admin/tickets",
-    "title": "Mensajes",
-    "icon": "RiMessage3Line",
-    "child": []
-  },
-  {
-    "id": 5,
-    "route": "/admin/",
-    "title": "Calendario",
-    "icon": "RiCalendarTodoLine",
-    "child": []
-  },
-  {
-    "id": 6,
-    "route": "/admin/analytics",
-    "title": "Analíticas",
-    "icon": "RiBarChart2Line",
-    "child": []
-  },
-  {
-    "id": 7,
     "route": "/admin/settings",
     "title": "Configuración",
     "icon": "RiSettings3Line",
