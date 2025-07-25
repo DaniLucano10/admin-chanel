@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "route": "/admin/chat",
-    "title": "Analíticas",
+    "route": "/admin/dashboard",
+    "title": "Dashboard",
     "icon": "RiBarChart2Line",
     "child": []
   },

@@ -3,7 +3,7 @@ import { ForgetPassword, Login } from "./pages/auth";
 import { AuthLayout } from "./layouts/AuthLayout";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { Error404 } from "./pages/Error404";
-import { Country, Home, Users } from "./pages/admin";
+import { Country, Dashboard, Home, Users } from "./pages/admin";
 import { PrivateRoute } from "./PrivateRoute";
 
 
@@ -28,6 +28,7 @@ function App() {
           }
         >
           <Route index element={<Home />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="users" element={<Users />} />
           <Route path="settings/country" element={<Country />} />
         </Route>
