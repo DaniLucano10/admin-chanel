@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ForgetPassword, Login, Register } from "./pages/auth";
+import { ForgetPassword, Login } from "./pages/auth";
 import { AuthLayout } from "./layouts/AuthLayout";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { Error404 } from "./pages/Error404";
-import { Chat, Country, Home, Users } from "./pages/admin";
+import { Country, Home, Users } from "./pages/admin";
 import { PrivateRoute } from "./PrivateRoute";
 
 
@@ -15,7 +15,6 @@ function App() {
         <Route path="/auth" element={<AuthLayout />}>
           <Route index element={<Login />} />
           <Route path="login" element={<Login />} />
-          <Route path="registro" element={<Register />} />
           <Route path="olvide-password" element={<ForgetPassword />} />
         </Route>
 
@@ -29,7 +28,6 @@ function App() {
           }
         >
           <Route index element={<Home />} />
-          <Route path="chat" element={<Chat />} />
           <Route path="users" element={<Users />} />
           <Route path="settings/country" element={<Country />} />
         </Route>

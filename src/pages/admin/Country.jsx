@@ -35,7 +35,7 @@ export const Country = () => {
         </div>
         <div className="w-full md:w-auto">
           <Button className="w-full md:w-64" variant="primary" onClick={false}>
-            Crear Usuario
+            Crear Pais
           </Button>
         </div>
       </div>
