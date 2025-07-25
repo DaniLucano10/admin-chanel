@@ -1,9 +1,10 @@
+import { SalesChart } from "../../components/charts";
+
 
 export const Dashboard = () => {
   return (
     <div>
-      es un dashboard
+      <SalesChart />
     </div>
-  )
-}
-
+  );
+};
