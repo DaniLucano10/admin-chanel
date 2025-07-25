@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "../useAuth";
 import axios from "axios";
+import { useToast } from "../../context/ToastContext";
 
 export const useDeleteCountry = ({ id, fetch, close }) => {
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState(null);
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
     const { getToken } = useAuth();
+    const { showToast } = useToast();
 
     const remove = async () => {
         setLoading(true);
@@ -15,27 +15,23 @@ export const useDeleteCountry = ({ id, fetch, close }) => {
 
         try {
             const token = getToken();
-            const response = await axios.delete(
+            await axios.delete(
                 `${import.meta.env.VITE_API_URL}/country/${id}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            setData(response.data);
-            setSuccess(true);
+            showToast("País eliminado correctamente", "success");
             fetch();
             close();
         } catch (err) {
-            setError(
-                err.response
-                    ? err.response.data
-                    : 'A ocurrido un error al eliminar el dato.'
-            );
-            close();
+            const errorMessage = err.response?.data?.message || 'Ocurrió un error al eliminar el país.';
+            setError({ message: errorMessage });
+            showToast(errorMessage, "error");
         } finally {
             setLoading(false);
         }
     };
 
-    return { remove, loading, error, data, success, setSuccess };
+    return { remove, loading, error };
 };

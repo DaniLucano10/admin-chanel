@@ -5,7 +5,6 @@ import {
   Button,
   Modal,
   ConfirmDeleteDialog,
-  Toast,
 } from "../../components/ui";
 import { UserTable } from "../../components/tables/UserTable";
 import {
@@ -13,7 +12,6 @@ import {
   useFetchUsers,
   useUpdateUser,
   useDeleteUser,
-  useShowToast,
   useToggleUserStatus,
 } from "../../hooks";
 import { AddUserForm, EditUserForm } from "../../components";
@@ -24,9 +22,6 @@ export const Users = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState("success");
 
   const handleActionClick = (user, action) => {
     setSelectedItem(user);
@@ -47,10 +42,7 @@ export const Users = () => {
   const {
     register,
     loading: loadingRegister,
-    error: errorRegister,
-    success: successRegister,
     setError: setErrorRegister,
-    setSuccess: setSuccessRegister,
   } = useCreateUser({
     fetch: fetchUsers,
     close: () => setOpenAddModal(false),
@@ -59,9 +51,6 @@ export const Users = () => {
   const {
     update,
     loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-    setSuccess: setSuccessUpdate,
   } = useUpdateUser({
     id: selectedItem?.id,
     fetch: fetchUsers,
@@ -71,9 +60,6 @@ export const Users = () => {
   const {
     remove: deleteUser,
     loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-    setSuccess: setSuccessDelete,
   } = useDeleteUser({
     id: selectedItem?.id,
     fetch: fetchUsers,
@@ -82,75 +68,12 @@ export const Users = () => {
 
   const {
     toggleStatus,
-    error: errorToggle,
-    success: successToggle,
-    setSuccess: setSuccessToggle,
   } = useToggleUserStatus({
     fetchUsers,
   });
   const handleDelete = async (e) => {
     e.preventDefault();
     await deleteUser();
-  };
-
-  // Para crear usuario
-  useShowToast(
-    successRegister,
-    errorRegister,
-    "Usuario creado correctamente",
-    errorRegister,
-    setShowToast,
-    setToastMessage,
-    setToastType,
-    setSuccessRegister,
-    [successRegister, errorRegister]
-  );
-
-  // Para editar usuario
-  useShowToast(
-    successUpdate,
-    errorUpdate,
-    "Usuario actualizado correctamente",
-    errorUpdate,
-    setShowToast,
-    setToastMessage,
-    setToastType,
-    setSuccessUpdate,
-    [successUpdate, errorUpdate]
-  );
-
-  // Para eliminar usuario
-  useShowToast(
-    successDelete,
-    errorDelete,
-    "Usuario eliminado correctamente",
-    errorDelete,
-    setShowToast,
-    setToastMessage,
-    setToastType,
-    setSuccessDelete,
-    [successDelete, errorDelete]
-  );
-
-  // Para cambiar estado
-  useShowToast(
-    successToggle,
-    errorToggle,
-    "Estado del usuario actualizado",
-    errorToggle,
-    setShowToast,
-    setToastMessage,
-    setToastType,
-    setSuccessToggle,
-    [successToggle, errorToggle]
-  );
-
-  const handleCloseToast = () => {
-    setShowToast(false);
-    setTimeout(() => {
-      setToastMessage("");
-      setToastType("success");
-    }, 300);
   };
 
   const filteredUsers = data?.filter((user) => {
@@ -234,13 +157,6 @@ export const Users = () => {
         message={`¿Estás seguro de que deseas eliminar a ${selectedItem?.fullname}?`}
         loading={loadingDelete}
       />
-      {showToast && (
-        <Toast
-          type={toastType}
-          message={toastMessage}
-          onClose={handleCloseToast}
-        />
-      )}
     </div>
   );
 };

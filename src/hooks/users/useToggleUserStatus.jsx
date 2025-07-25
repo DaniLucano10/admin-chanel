@@ -1,17 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../useAuth";
+import { useToast } from "../../context/ToastContext";
 
 export const useToggleUserStatus = ({ fetchUsers }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
   const { getToken } = useAuth();
+  const { showToast } = useToast();
 
   const toggleStatus = async (id) => {
     setLoading(true);
     setError(null);
-    setSuccess(false);
 
     try {
       const token = getToken();
@@ -24,17 +24,16 @@ export const useToggleUserStatus = ({ fetchUsers }) => {
           },
         }
       );
-      setSuccess(true);
+      showToast("Estado del usuario actualizado", "success");
       fetchUsers(); 
     } catch (err) {
-      setError(
-        err.response?.data?.message || "No se pudo actualizar el estado"
-      );
-      setSuccess(false);
+      const errorMessage = err.response?.data?.message || "No se pudo actualizar el estado";
+      setError({ message: errorMessage });
+      showToast(errorMessage, "error");
     } finally {
       setLoading(false);
     }
   };
 
-  return { toggleStatus, loading, error, success, setSuccess };
+  return { toggleStatus, loading, error };
 };

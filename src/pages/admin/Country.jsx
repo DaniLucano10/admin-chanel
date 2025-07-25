@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
-import { Input, Button, Modal, Toast, ConfirmDeleteDialog } from "../../components/ui";
+import { Input, Button, Modal, ConfirmDeleteDialog } from "../../components/ui";
 
 import {
   AddCountryForm,
@@ -11,7 +11,6 @@ import {
   useCreateCountry,
   useDeleteCountry,
   useFetchCountry,
-  useShowToast,
   useUpdateCountry,
 } from "../../hooks";
 
@@ -21,9 +20,6 @@ export const Country = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState("success");
 
   const handleActionClick = (country, action) => {
     setSelectedItem(country);
@@ -52,10 +48,7 @@ export const Country = () => {
   const {
     register,
     loading: loadingRegister,
-    error: errorRegister,
-    success: successRegister,
     setError: setErrorRegister,
-    setSuccess: setSuccessRegister,
   } = useCreateCountry({
     fetch: fetchCountries,
     close: () => setOpenAddModal(false),
@@ -64,9 +57,6 @@ export const Country = () => {
   const {
     update,
     loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-    setSuccess: setSuccessUpdate,
   } = useUpdateCountry({
     id: selectedItem?.id,
     fetch: fetchCountries,
@@ -76,9 +66,6 @@ export const Country = () => {
   const {
     remove: deleteCountry,
     loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-    setSuccess: setSuccessDelete,
   } = useDeleteCountry({
     id: selectedItem?.id,
     fetch: fetchCountries,
@@ -90,54 +77,6 @@ export const Country = () => {
     await deleteCountry();
   };
 
-  // Para crear paises
-  useShowToast(
-    successRegister,
-    errorRegister,
-    "País creado correctamente.",
-    errorRegister,
-    setShowToast,
-    setToastMessage,
-    setToastType,
-    setSuccessRegister,
-    [successRegister, errorRegister]
-  );
-
-  // Para editar paises
-  useShowToast(
-    successUpdate,
-    errorUpdate,
-    "País editado correctamente.",
-    errorUpdate,
-    setShowToast,
-    setToastMessage,
-    setToastType,
-    setSuccessUpdate,
-    [successUpdate, errorUpdate]
-  );
-
-  // Para eliminar paises
-  useShowToast(
-    successDelete,
-    errorDelete,
-    "País eliminado correctamente.",
-    errorDelete,
-    setShowToast,
-    setToastMessage,
-    setToastType,
-    setSuccessDelete,
-    [successDelete, errorDelete]
-  );
-
-  const handleCloseToast = () => {
-    setShowToast(false);
-    setTimeout(() => {
-      setToastMessage("");
-      setToastType("success");
-    }, 300);
-  };
-
-  console.log(filteredCountries);
   return (
     <div className="space-y-4 w-full">
       {/* <h1 className="text-2xl text-black dark:text-white font-bold">
@@ -207,14 +146,6 @@ export const Country = () => {
         message={`¿Estás seguro de que deseas eliminar a ${selectedItem?.name}?`}
         loading={loadingDelete}
       />
-
-      {showToast && (
-        <Toast
-          type={toastType}
-          message={toastMessage}
-          onClose={handleCloseToast}
-        />
-      )}
     </div>
   );
 };
