@@ -36,5 +36,5 @@ export const useToggleUserStatus = ({ fetchUsers }) => {
     }
   };
 
-  return { toggleStatus, loading, error, success };
+  return { toggleStatus, loading, error, success, setSuccess };
 };

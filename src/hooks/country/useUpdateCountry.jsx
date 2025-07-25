@@ -6,6 +6,7 @@ export const useUpdateCountry = ({ id, fetch, close }) => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
     const { getToken } = useAuth();
 
     const update = async (payload) => {
@@ -22,6 +23,7 @@ export const useUpdateCountry = ({ id, fetch, close }) => {
                 }
             );
             setData(response.data);
+            setSuccess(true);
             fetch();
             close();
         } catch (err) {
@@ -35,5 +37,5 @@ export const useUpdateCountry = ({ id, fetch, close }) => {
         }
     };
 
-    return { loading, data, error, update };
+    return { loading, data, error, success, update, setSuccess };
 };

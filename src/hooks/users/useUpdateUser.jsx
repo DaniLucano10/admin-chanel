@@ -5,14 +5,14 @@ import axios from "axios";
 export const useUpdateUser = ({ fetch, close }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState(false);
   const [data, setData] = useState(null);
   const { getToken } = useAuth();
 
   const update = async (id, formData) => {
     setLoading(true);
     setError(null);
-    setSuccess(null);
+    setSuccess(false);
 
     try {
       const token = getToken();
@@ -24,12 +24,9 @@ export const useUpdateUser = ({ fetch, close }) => {
         }
       );
       setData(response.data);
-      setSuccess("Usuario actualizado exitosamente.");
+      setSuccess(true);
       fetch();
-      setTimeout(() => {
-        close();
-        setSuccess(null);
-      }, 2000);
+      close();
     } catch (err) {
       setError(
         err.response && err.response.data
@@ -41,5 +38,5 @@ export const useUpdateUser = ({ fetch, close }) => {
     }
   };
 
-  return { update, data, loading, error, success, setError };
+  return { update, data, loading, error, success, setError, setSuccess };
 };

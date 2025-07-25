@@ -50,6 +50,7 @@ export const Users = () => {
     error: errorRegister,
     success: successRegister,
     setError: setErrorRegister,
+    setSuccess: setSuccessRegister,
   } = useCreateUser({
     fetch: fetchUsers,
     close: () => setOpenAddModal(false),
@@ -60,6 +61,7 @@ export const Users = () => {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
+    setSuccess: setSuccessUpdate,
   } = useUpdateUser({
     id: selectedItem?.id,
     fetch: fetchUsers,
@@ -71,6 +73,7 @@ export const Users = () => {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
+    setSuccess: setSuccessDelete,
   } = useDeleteUser({
     id: selectedItem?.id,
     fetch: fetchUsers,
@@ -81,6 +84,7 @@ export const Users = () => {
     toggleStatus,
     error: errorToggle,
     success: successToggle,
+    setSuccess: setSuccessToggle,
   } = useToggleUserStatus({
     fetchUsers,
   });
@@ -98,6 +102,7 @@ export const Users = () => {
     setShowToast,
     setToastMessage,
     setToastType,
+    setSuccessRegister,
     [successRegister, errorRegister]
   );
 
@@ -110,6 +115,7 @@ export const Users = () => {
     setShowToast,
     setToastMessage,
     setToastType,
+    setSuccessUpdate,
     [successUpdate, errorUpdate]
   );
 
@@ -122,6 +128,7 @@ export const Users = () => {
     setShowToast,
     setToastMessage,
     setToastType,
+    setSuccessDelete,
     [successDelete, errorDelete]
   );
 
@@ -134,6 +141,7 @@ export const Users = () => {
     setShowToast,
     setToastMessage,
     setToastType,
+    setSuccessToggle,
     [successToggle, errorToggle]
   );
 

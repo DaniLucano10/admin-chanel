@@ -20,6 +20,7 @@ export const useShowToast = (
   setShowToast,
   setToastMessage,
   setToastType,
+  setSuccess,
   deps = []
 ) => {
   useEffect(() => {
@@ -27,6 +28,7 @@ export const useShowToast = (
       setShowToast(true);
       setToastMessage(successMessage);
       setToastType("success");
+      setSuccess(false);
     } else if (error) {
       setShowToast(true);
       setToastMessage(

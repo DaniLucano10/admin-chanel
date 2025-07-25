@@ -55,6 +55,7 @@ export const Country = () => {
     error: errorRegister,
     success: successRegister,
     setError: setErrorRegister,
+    setSuccess: setSuccessRegister,
   } = useCreateCountry({
     fetch: fetchCountries,
     close: () => setOpenAddModal(false),
@@ -65,6 +66,7 @@ export const Country = () => {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
+    setSuccess: setSuccessUpdate,
   } = useUpdateCountry({
     id: selectedItem?.id,
     fetch: fetchCountries,
@@ -76,6 +78,7 @@ export const Country = () => {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
+    setSuccess: setSuccessDelete,
   } = useDeleteCountry({
     id: selectedItem?.id,
     fetch: fetchCountries,
@@ -96,6 +99,7 @@ export const Country = () => {
     setShowToast,
     setToastMessage,
     setToastType,
+    setSuccessRegister,
     [successRegister, errorRegister]
   );
 
@@ -108,6 +112,7 @@ export const Country = () => {
     setShowToast,
     setToastMessage,
     setToastType,
+    setSuccessUpdate,
     [successUpdate, errorUpdate]
   );
 
@@ -120,6 +125,7 @@ export const Country = () => {
     setShowToast,
     setToastMessage,
     setToastType,
+    setSuccessDelete,
     [successDelete, errorDelete]
   );
 

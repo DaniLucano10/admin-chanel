@@ -6,6 +6,7 @@ export const useDeleteCountry = ({ id, fetch, close }) => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
     const { getToken } = useAuth();
 
     const remove = async () => {
@@ -21,6 +22,7 @@ export const useDeleteCountry = ({ id, fetch, close }) => {
                 }
             );
             setData(response.data);
+            setSuccess(true);
             fetch();
             close();
         } catch (err) {
@@ -35,5 +37,5 @@ export const useDeleteCountry = ({ id, fetch, close }) => {
         }
     };
 
-    return { remove, loading, error, data };
+    return { remove, loading, error, data, success, setSuccess };
 };

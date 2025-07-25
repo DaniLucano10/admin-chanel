@@ -6,14 +6,14 @@ import axios from "axios";
 export const useCreateUser = ({ fetch, close }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState(false);
   const [data, setData] = useState(null);
   const { getToken } = useAuth();
 
   const register = async (formData) => {
     setLoading(true);
     setError(null);
-    setSuccess(null);
+    setSuccess(false);
 
     try {
       const token = getToken();
@@ -25,12 +25,9 @@ export const useCreateUser = ({ fetch, close }) => {
             }
         );
         setData(response.data);
-        setSuccess("Usuario creado exitosamente.");
+        setSuccess(true);
         fetch();
-        setTimeout(() => {
-            close();
-            setSuccess(null);
-        }, 2000);
+        close();
     } catch (err) {
         setError(
             err.response && err.response.data
@@ -42,5 +39,5 @@ export const useCreateUser = ({ fetch, close }) => {
     }
   };
 
-  return { register, data, loading, error, success, setError };
+  return { register, data, loading, error, success, setError, setSuccess };
 };

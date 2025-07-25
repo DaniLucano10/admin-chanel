@@ -5,6 +5,7 @@ import axios from "axios";
 export const useCreateCountry = ({ fetch, close }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
     const [data, setData] = useState(null);
     const { getToken } = useAuth();
 
@@ -22,6 +23,7 @@ export const useCreateCountry = ({ fetch, close }) => {
                 }
             );
             setData(response.data);
+            setSuccess(true);
             fetch();
             close();
         } catch (err) {
@@ -35,5 +37,5 @@ export const useCreateCountry = ({ fetch, close }) => {
         }
     };
 
-    return { register, data, loading, error, setError };
+    return { register, data, loading, error, success, setError, setSuccess };
 };

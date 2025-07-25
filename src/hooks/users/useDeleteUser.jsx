@@ -38,5 +38,5 @@ export const useDeleteUser = ({ id, close, fetch }) => {
     }
   };
 
-  return { remove, data, loading, error, success };
+  return { remove, data, loading, error, success, setSuccess };
 };
