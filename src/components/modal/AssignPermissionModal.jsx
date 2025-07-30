@@ -1,4 +1,4 @@
-import { Modal } from "../ui";
+import { Input, Modal } from "../ui";
 
 export const AssignPermissionModal = ({
   open,
@@ -21,7 +21,7 @@ export const AssignPermissionModal = ({
       open={open}
       onOpenChange={close}
       title={`Asignar Permisos a ${selectedItem?.name}`}
-      size="md"
+      size="2xl"
     >
       <div className="p-4">
         {loading ? (
@@ -37,7 +37,7 @@ export const AssignPermissionModal = ({
                 key={permission.id}
                 className="flex items-center gap-2 p-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
-                <input
+                <Input
                   type="checkbox"
                   id={`perm-${permission.id}`}
                   value={permission.id}
