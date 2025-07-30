@@ -9,7 +9,7 @@ import {
   TableSkeleton,
 } from "../ui/table";
 import { Button, IconButton } from "../ui";
-import { RiEditLine, RiDeleteBinLine } from "react-icons/ri";
+import { RiEditLine, RiDeleteBinLine, RiShieldUserLine } from "react-icons/ri";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useEffect, useState } from "react";
@@ -44,7 +44,7 @@ export const UserTable = ({
   const firstPageIndex = (currentPage - 1) * pageSize;
   const lastPageIndex = firstPageIndex + pageSize;
   const currentTableData = users.slice(firstPageIndex, lastPageIndex);
-
+  console.log("usuarios", users);
   if (loading) {
     return (
       <div className="w-[360px] md:w-full overflow-x-auto bg-gray-200 dark:bg-card p-4 rounded-lg shadow-md border border-border">
@@ -61,6 +61,7 @@ export const UserTable = ({
             <TableHead>N°</TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead>Email</TableHead>
+            <TableHead>Roles</TableHead>
             <TableHead>País</TableHead>
             <TableHead>Estado</TableHead>
             <TableHead>Creado</TableHead>
@@ -80,6 +81,17 @@ export const UserTable = ({
                 <TableCell>{index + 1}</TableCell>
                 <TableCell className="font-medium">{user.fullname}</TableCell>
                 <TableCell>{user.email}</TableCell>
+                <TableCell>
+                  {user.roles?.length > 0 ? (
+                    <span className="inline-block rounded-xl px-3 py-1 text-sm font-medium bg-blue-500 text-gray-800 dark:bg-sidebar-primary dark:text-gray-100">
+                      {user.roles[0].name}
+                    </span>
+                  ) : (
+                    <span className="inline-block rounded-xl px-3 py-1 text-sm font-medium bg-yellow-200 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-100">
+                      Sin rol
+                    </span>
+                  )}
+                </TableCell>
                 <TableCell>{user.country?.name}</TableCell>
                 <TableCell>
                   <Button
@@ -107,6 +119,13 @@ export const UserTable = ({
                       onClick={() => onActionClick(user, "edit")}
                     >
                       <RiEditLine />
+                    </IconButton>
+                    <IconButton
+                      variant="info"
+                      size="sm"
+                      onClick={() => onActionClick(user, "role")}
+                    >
+                      <RiShieldUserLine />
                     </IconButton>
                     <IconButton
                       variant="danger"
