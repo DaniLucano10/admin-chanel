@@ -4,7 +4,14 @@ import { AuthLayout } from "./layouts/AuthLayout";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { Error404 } from "./pages/Error404";
 import { Unauthorized } from "./pages/Unauthorized";
-import { Country, Dashboard, Home, Users } from "./pages/admin";
+import {
+  Country,
+  Dashboard,
+  Home,
+  Permissions,
+  Roles,
+  Users,
+} from "./pages/admin";
 import { PrivateRoute, ProtectedRoute } from "./ProtectedRoute";
 import { PermissionProvider } from "./context/PermissionContext";
 
@@ -42,6 +49,19 @@ function App() {
               element={<ProtectedRoute requiredPermission="settings.view" />}
             >
               <Route path="/admin/settings/country" element={<Country />} />
+            </Route>
+            <Route
+              element={<ProtectedRoute requiredPermission="settings.view" />}
+            >
+              <Route
+                path="/admin/settings/permissions"
+                element={<Permissions />}
+              />
+            </Route>
+            <Route
+              element={<ProtectedRoute requiredPermission="settings.view" />}
+            >
+              <Route path="/admin/settings/roles" element={<Roles />} />
             </Route>
           </Route>
         </Route>

@@ -28,6 +28,20 @@
         "title": "País",
         "icon": "RiMapPinLine",
         "child": []
+      },
+      {
+        "id": 2,
+        "route": "/admin/settings/permissions",
+        "title": "Permisos",
+        "icon": "HiOutlineLockClosed",
+        "child": []
+      },
+      {
+        "id": 3,
+        "route": "/admin/settings/roles",
+        "title": "Roles",
+        "icon": "RiShieldUserLine",
+        "child": []
       }
     ]
   }
