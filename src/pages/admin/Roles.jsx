@@ -6,14 +6,21 @@ import {
   useCreateRole,
   useUpdateRole,
   useDeleteRole,
+  useAssignPermissions,
+  useUnassignPermissions,
 } from "../../hooks";
-import { AddRoleForm, EditRoleForm, RoleTable } from "../../components";
+import {
+  AddRoleForm,
+  AssignPermissionModal,
+  EditRoleForm,
+  RoleTable,
+} from "../../components";
 
 export const Roles = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [openPermissionModal, setOpenPermissionModal] = useState(false);
+  const [openAssignModal, setOpenAssignModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -24,7 +31,7 @@ export const Roles = () => {
         setOpenEditModal(true);
         break;
       case "permission":
-        setOpenPermissionModal(true);
+        setOpenAssignModal(true);
         break;
       case "delete":
         setOpenDeleteModal(true);
@@ -35,6 +42,11 @@ export const Roles = () => {
   };
 
   const { data, fetchRoles, loading } = useFetchRoles();
+
+  const filteredRoles = data?.filter((role) => {
+    const term = searchTerm.toLowerCase();
+    return role.name?.toLowerCase().includes(term);
+  });
 
   const {
     register,
@@ -57,15 +69,54 @@ export const Roles = () => {
     close: () => setOpenDeleteModal(false),
   });
 
+  // Asignar permisos
+
+  const { assignPermission } = useAssignPermissions({
+    fetch: fetchRoles,
+    close: () => {},
+  });
+
+  const { unassignPermissions } = useUnassignPermissions({
+    fetch: fetchRoles,
+    close: () => {},
+  });
+
+  const handleAssignPermissions = async ({ permissionId, checked }) => {
+    if (!selectedItem?.id || !permissionId) {
+      return;
+    }
+
+    const payload = {
+      role_id: selectedItem.id,
+      permission_id: permissionId,
+    };
+
+    try {
+      if (checked) {
+        await assignPermission(payload);
+      } else {
+        await unassignPermissions(payload);
+      }
+
+      const updatedPermissions = checked
+        ? [...(selectedItem.permissions || []), { id: permissionId }]
+        : (selectedItem.permissions || []).filter(
+            (permission) => permission.id !== permissionId
+          );
+
+      setSelectedItem((prev) => ({
+        ...prev,
+        permissions: updatedPermissions,
+      }));
+    } catch (error) {
+      console.error("Error al cambiar permiso:", error);
+    }
+  };
+
   const handleDelete = async (e) => {
     e.preventDefault();
     await deleteRole();
   };
-
-  const filteredRoles = data?.filter((role) => {
-    const term = searchTerm.toLowerCase();
-    return role.name?.toLowerCase().includes(term);
-  });
 
   return (
     <div className="space-y-4 w-full">
@@ -125,14 +176,10 @@ export const Roles = () => {
         />
       </Modal>
 
-      <Modal
-        size="lg"
-        open={openPermissionModal}
-        onOpenChange={setOpenPermissionModal}
-        title="Asignar Permisos"
-      >
-        hola
-      </Modal>
+      <AssignPermissionModal
+        open={openAssignModal}
+        close={() => setOpenAssignModal(false)}
+      />
 
       <ConfirmDeleteDialog
         open={openDeleteModal}
