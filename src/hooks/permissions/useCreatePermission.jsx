@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "../useAuth";
 import axios from "axios";
+import { useToast } from "../../context/ToastContext";
 
 export const useCreatePermission = ({ fetch, close }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [data, setData] = useState(null);
     const { getToken } = useAuth();
+    const { showToast } = useToast();
 
     const register = async (formData) => {
         setLoading(true);
@@ -14,26 +15,24 @@ export const useCreatePermission = ({ fetch, close }) => {
 
         try {
             const token = getToken();
-            const response = await axios.post(
+            await axios.post(
                 `${import.meta.env.VITE_API_URL}/permission`,
                 formData,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            setData(response.data);
+            showToast("Permiso creado correctamente", "success");
             fetch();
             close();
         } catch (err) {
-            setError(
-                err.response
-                    ? err.response.data
-                    : 'A ocurrido un error al registrar el dato.'
-            );
+            const errorMessage = err.response?.data?.message || 'Ocurrió un error al registrar el permiso.';
+            setError({ message: errorMessage });
+            showToast(errorMessage, "error");
         } finally {
             setLoading(false);
         }
     };
 
-    return { register, data, loading, error, setError };
+    return { register, loading, error, setError };
 }
