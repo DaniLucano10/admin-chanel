@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
-import {
-  Input,
-  Button,
-  Modal,
-  ConfirmDeleteDialog,
-} from "../../components/ui";
+import { Input, Button, Modal, ConfirmDeleteDialog } from "../../components/ui";
 import { UserTable } from "../../components/tables/UserTable";
 import {
   useCreateUser,
@@ -20,6 +15,7 @@ export const Users = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openRoleModal, setOpenRoleModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -28,6 +24,9 @@ export const Users = () => {
     switch (action) {
       case "edit":
         setOpenEditModal(true);
+        break;
+      case "role":
+        setOpenRoleModal(true);
         break;
       case "delete":
         setOpenDeleteModal(true);
@@ -48,27 +47,19 @@ export const Users = () => {
     close: () => setOpenAddModal(false),
   });
 
-  const {
-    update,
-    loading: loadingUpdate,
-  } = useUpdateUser({
+  const { update, loading: loadingUpdate } = useUpdateUser({
     id: selectedItem?.id,
     fetch: fetchUsers,
     close: () => setOpenEditModal(false),
   });
 
-  const {
-    remove: deleteUser,
-    loading: loadingDelete,
-  } = useDeleteUser({
+  const { remove: deleteUser, loading: loadingDelete } = useDeleteUser({
     id: selectedItem?.id,
     fetch: fetchUsers,
     close: () => setOpenDeleteModal(false),
   });
 
-  const {
-    toggleStatus,
-  } = useToggleUserStatus({
+  const { toggleStatus } = useToggleUserStatus({
     fetchUsers,
   });
   const handleDelete = async (e) => {
@@ -147,6 +138,15 @@ export const Users = () => {
           onUpdate={update}
           loading={loadingUpdate}
         />
+      </Modal>
+
+      <Modal
+        size="lg"
+        open={openRoleModal}
+        onOpenChange={setOpenRoleModal}
+        title="Asignar Roles"
+      >
+        hola
       </Modal>
 
       <ConfirmDeleteDialog
