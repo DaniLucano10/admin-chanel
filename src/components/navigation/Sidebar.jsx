@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import sidebarData from "../../data/sidebar.json";
 import { useAuth } from "../../hooks";
+import { usePermissions } from "../../context/PermissionContext";
 import {
   HiOutlineChevronDoubleLeft,
   HiOutlineChevronDoubleRight,
@@ -65,12 +66,23 @@ export const Sidebar = () => {
     content: null,
   });
   const { logout, getUser } = useAuth();
+  const { permissions } = usePermissions();
   const user = getUser();
   const buttonRefs = useRef([]);
+
+  const filteredSidebarData = sidebarData.filter(item => {
+    if (!item.permissions || item.permissions.length === 0) {
+      return true; // Mostrar si no se requieren permisos
+    }
+    return item.permissions.some(p => permissions.includes(p));
+  });
 
   const showText = !isCollapsed;
 
   const handleSubmenu = (index, event) => {
+    const item = filteredSidebarData[index];
+    if (!item || !item.child || item.child.length === 0) return;
+
     if (isCollapsed) {
       if (showSubmenu === index) {
         setSubmenuPortal({ show: false, x: 0, y: 0, content: null });
@@ -81,7 +93,7 @@ export const Sidebar = () => {
           show: true,
           x: rect.right + 8,
           y: rect.top,
-          content: sidebarData[index].child,
+          content: item.child,
         });
         setShowSubmenu(index);
       }
@@ -191,7 +203,7 @@ export const Sidebar = () => {
 
             {/* Menú principal */}
             <ul>
-              {sidebarData.map((item, index) => {
+              {filteredSidebarData.map((item, index) => {
                 const isActive = activePath === item.route;
 
                 return (
