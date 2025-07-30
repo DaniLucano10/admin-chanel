@@ -8,6 +8,7 @@ import {
   useDeleteRole,
   useAssignPermissions,
   useUnassignPermissions,
+  useFetchPermissions,
 } from "../../hooks";
 import {
   AddRoleForm,
@@ -70,6 +71,7 @@ export const Roles = () => {
   });
 
   // Asignar permisos
+  const { data: permissions } = useFetchPermissions();
 
   const { assignPermission } = useAssignPermissions({
     fetch: fetchRoles,
@@ -90,7 +92,7 @@ export const Roles = () => {
       role_id: selectedItem.id,
       permission_id: permissionId,
     };
-
+    console.log("datos envi", payload);
     try {
       if (checked) {
         await assignPermission(payload);
@@ -179,6 +181,11 @@ export const Roles = () => {
       <AssignPermissionModal
         open={openAssignModal}
         close={() => setOpenAssignModal(false)}
+        onAssign={handleAssignPermissions}
+        permissions={permissions}
+        rolesPermissions={selectedItem?.permissions?.map((r) => r.id) || []}
+        roleId={selectedItem?.id}
+        selectedItem={selectedItem}
       />
 
       <ConfirmDeleteDialog
