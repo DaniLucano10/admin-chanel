@@ -12,13 +12,15 @@ import {
   DropdownItem,
   DropdownSeparator,
 } from "../ui/dropdown";
-import { useAuth } from "../../hooks";
+import { useAuth, useFetchUsers } from "../../hooks";
 
 export const TopBar = () => {
   const { logout, getUser } = useAuth();
   const user = getUser();
-  console.log(user);
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { data: usersData } = useFetchUsers();
+
+  const currentUserData = usersData?.find((u) => u.email === user.email);
 
   const handleLogout = () => {
     if (user) {
@@ -126,7 +128,9 @@ export const TopBar = () => {
                   {user?.username}
                 </span>
                 <span className="text-xs text-gray-500 truncate">
-                  {user?.email}
+                  {currentUserData?.roles && currentUserData.roles.length > 0
+                    ? currentUserData.roles[0].name
+                    : "Sin rol"}
                 </span>
               </div>
 
