@@ -1,14 +1,14 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import { RiCloseLine } from 'react-icons/ri';
-import { cn } from '../../../utils/cn';
+import * as Dialog from "@radix-ui/react-dialog";
+import { RiCloseLine } from "react-icons/ri"; // 👈 icono de cerrar
+import { cn } from "../../../utils/cn";
 
-export const Modal = ({ open, onOpenChange, title, children, size = 'md' }) => {
+export const Modal = ({ open, onOpenChange, children, size = "md" }) => {
   const sizeMap = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
-    '2xl': 'max-w-2xl',
+    sm: "max-w-sm",
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-4xl",
   };
 
   return (
@@ -25,23 +25,17 @@ export const Modal = ({ open, onOpenChange, title, children, size = 'md' }) => {
             "data-[state=open]:animate-contentShow"
           )}
         >
-          <Dialog.Title className="text-xl font-bold mb-4">
-            {title}
-          </Dialog.Title>
-          
-          {children}
-
-          <Dialog.Close asChild>
-            <button
-              className="text-muted-foreground hover:text-foreground absolute top-4 right-4 inline-flex h-6 w-6 items-center justify-center rounded-full"
-              aria-label="Close"
-            >
-              <RiCloseLine size={20} />
-            </button>
+          {/* Botón de cerrar */}
+          <Dialog.Close
+            className="absolute top-4 right-4 text-gray-400 dark:hover:text-white focus:outline-none cursor-pointer"
+            aria-label="Cerrar"
+          >
+            <RiCloseLine size={24} />
           </Dialog.Close>
+
+          {children}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );
 };
-
