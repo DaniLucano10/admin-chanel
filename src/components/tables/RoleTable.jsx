@@ -8,7 +8,7 @@ import {
   Pagination,
   TableSkeleton,
 } from "../ui/table";
-import { IconButton } from "../ui";
+import { IconButton, Tooltip } from "../ui";
 import { RiEditLine, RiDeleteBinLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { HiOutlineLockClosed } from "react-icons/hi";
@@ -71,30 +71,36 @@ export const RoleTable = ({ data, loading, onActionClick }) => {
                 <TableCell className="font-medium">{role.name}</TableCell>
                 <TableCell>
                   <div className="flex gap-4">
-                    <IconButton
-                      variant="outline"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(role, "edit")}
-                    >
-                      <RiEditLine />
-                    </IconButton>
-                    <IconButton
-                      variant="success"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(role, "permission")}
-                    >
-                      <HiOutlineLockClosed />
-                    </IconButton>
-                    <IconButton
-                      variant="danger"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(role, "delete")}
-                    >
-                      <RiDeleteBinLine />
-                    </IconButton>
+                    <Tooltip text="Editar rol">
+                      <IconButton
+                        variant="outline"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(role, "edit")}
+                      >
+                        <RiEditLine />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip text="Asignar permisos">
+                      <IconButton
+                        variant="success"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(role, "permission")}
+                      >
+                        <HiOutlineLockClosed />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip text="Eliminar rol">
+                      <IconButton
+                        variant="danger"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(role, "delete")}
+                      >
+                        <RiDeleteBinLine />
+                      </IconButton>
+                    </Tooltip>
                   </div>
                 </TableCell>
               </TableRow>

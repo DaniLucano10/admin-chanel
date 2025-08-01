@@ -8,7 +8,7 @@ import {
   Pagination,
   TableSkeleton,
 } from "../ui/table";
-import { Button, IconButton } from "../ui";
+import { IconButton, Tooltip } from "../ui";
 import { RiEditLine, RiDeleteBinLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 
@@ -74,22 +74,26 @@ export const CountryTable = ({ data, loading, onActionClick }) => {
                 <TableCell>{country.dial_code}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <IconButton
-                      variant="outline"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(country, "edit")}
-                    >
-                      <RiEditLine />
-                    </IconButton>
-                    <IconButton
-                      variant="danger"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(country, "delete")}
-                    >
-                      <RiDeleteBinLine />
-                    </IconButton>
+                    <Tooltip text="Editar país">
+                      <IconButton
+                        variant="outline"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(country, "edit")}
+                      >
+                        <RiEditLine />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip text="Eliminar país">
+                      <IconButton
+                        variant="danger"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(country, "delete")}
+                      >
+                        <RiDeleteBinLine />
+                      </IconButton>
+                    </Tooltip>
                   </div>
                 </TableCell>
               </TableRow>

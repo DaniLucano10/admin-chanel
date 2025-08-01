@@ -8,7 +8,7 @@ import {
   Pagination,
   TableSkeleton,
 } from "../ui/table";
-import { IconButton } from "../ui";
+import { IconButton, Tooltip } from "../ui";
 import { RiEditLine, RiDeleteBinLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 
@@ -33,7 +33,7 @@ export const PermissionsTable = ({ data, loading, onActionClick }) => {
     window.addEventListener("resize", checkIsMobile);
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
-console.log(data)
+  console.log(data);
   const firstPageIndex = (currentPage - 1) * pageSize;
   const lastPageIndex = firstPageIndex + pageSize;
   const currentTableData = data?.slice(firstPageIndex, lastPageIndex) || [];
@@ -72,22 +72,26 @@ console.log(data)
                 <TableCell>{permission.guard_name}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <IconButton
-                      variant="outline"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(permission, "edit")}
-                    >
-                      <RiEditLine />
-                    </IconButton>
-                    <IconButton
-                      variant="danger"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(permission, "delete")}
-                    >
-                      <RiDeleteBinLine />
-                    </IconButton>
+                    <Tooltip text="Editar permiso">
+                      <IconButton
+                        variant="outline"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(permission, "edit")}
+                      >
+                        <RiEditLine />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip text="Eliminar permiso">
+                      <IconButton
+                        variant="danger"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(permission, "delete")}
+                      >
+                        <RiDeleteBinLine />
+                      </IconButton>
+                    </Tooltip>
                   </div>
                 </TableCell>
               </TableRow>

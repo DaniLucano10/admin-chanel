@@ -8,7 +8,7 @@ import {
   Pagination,
   TableSkeleton,
 } from "../ui/table";
-import { Button, IconButton } from "../ui";
+import { Button, IconButton, Tooltip } from "../ui";
 import { RiEditLine, RiDeleteBinLine, RiShieldUserLine } from "react-icons/ri";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -113,30 +113,36 @@ export const UserTable = ({
                 </TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <IconButton
-                      variant="outline"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(user, "edit")}
-                    >
-                      <RiEditLine />
-                    </IconButton>
-                    <IconButton
-                      variant="info"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(user, "role")}
-                    >
-                      <RiShieldUserLine />
-                    </IconButton>
-                    <IconButton
-                      variant="danger"
-                      rounded="md"
-                      size="sm"
-                      onClick={() => onActionClick(user, "delete")}
-                    >
-                      <RiDeleteBinLine />
-                    </IconButton>
+                    <Tooltip text="Editar usuario">
+                      <IconButton
+                        variant="outline"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(user, "edit")}
+                      >
+                        <RiEditLine />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip text="Asignar roles">
+                      <IconButton
+                        variant="info"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(user, "role")}
+                      >
+                        <RiShieldUserLine />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip text="Eliminar usuario">
+                      <IconButton
+                        variant="danger"
+                        rounded="md"
+                        size="sm"
+                        onClick={() => onActionClick(user, "delete")}
+                      >
+                        <RiDeleteBinLine />
+                      </IconButton>
+                    </Tooltip>
                   </div>
                 </TableCell>
               </TableRow>
