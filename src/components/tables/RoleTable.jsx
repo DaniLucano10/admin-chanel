@@ -70,9 +70,10 @@ export const RoleTable = ({ data, loading, onActionClick }) => {
                 <TableCell>{index + 1}</TableCell>
                 <TableCell className="font-medium">{role.name}</TableCell>
                 <TableCell>
-                  <div className="flex gap-2">
+                  <div className="flex gap-4">
                     <IconButton
                       variant="outline"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(role, "edit")}
                     >
@@ -80,6 +81,7 @@ export const RoleTable = ({ data, loading, onActionClick }) => {
                     </IconButton>
                     <IconButton
                       variant="success"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(role, "permission")}
                     >
@@ -87,6 +89,7 @@ export const RoleTable = ({ data, loading, onActionClick }) => {
                     </IconButton>
                     <IconButton
                       variant="danger"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(role, "delete")}
                     >

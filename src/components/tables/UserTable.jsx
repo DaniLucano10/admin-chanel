@@ -115,6 +115,7 @@ export const UserTable = ({
                   <div className="flex gap-2">
                     <IconButton
                       variant="outline"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(user, "edit")}
                     >
@@ -122,6 +123,7 @@ export const UserTable = ({
                     </IconButton>
                     <IconButton
                       variant="info"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(user, "role")}
                     >
@@ -129,6 +131,7 @@ export const UserTable = ({
                     </IconButton>
                     <IconButton
                       variant="danger"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(user, "delete")}
                     >

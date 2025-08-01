@@ -9,8 +9,6 @@ export const AssignPermissionModal = ({
   onAssign,
   loading,
 }) => {
-  console.log("Permisos asignados:", rolesPermissions);
-
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
     onAssign({ permissionId: parseInt(value), checked });

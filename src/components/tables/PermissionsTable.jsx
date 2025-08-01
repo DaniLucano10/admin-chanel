@@ -74,6 +74,7 @@ console.log(data)
                   <div className="flex gap-2">
                     <IconButton
                       variant="outline"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(permission, "edit")}
                     >
@@ -81,6 +82,7 @@ console.log(data)
                     </IconButton>
                     <IconButton
                       variant="danger"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(permission, "delete")}
                     >

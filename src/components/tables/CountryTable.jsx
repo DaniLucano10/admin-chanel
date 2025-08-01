@@ -76,6 +76,7 @@ export const CountryTable = ({ data, loading, onActionClick }) => {
                   <div className="flex gap-2">
                     <IconButton
                       variant="outline"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(country, "edit")}
                     >
@@ -83,6 +84,7 @@ export const CountryTable = ({ data, loading, onActionClick }) => {
                     </IconButton>
                     <IconButton
                       variant="danger"
+                      rounded="md"
                       size="sm"
                       onClick={() => onActionClick(country, "delete")}
                     >
