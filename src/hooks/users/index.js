@@ -5,3 +5,4 @@ export * from './useDeleteUser';
 export * from './useToggleUserStatus';
 export * from './useReadRolesAndPermissions';
 export * from './useAssignRole';
+export * from './useUnassignRole';
