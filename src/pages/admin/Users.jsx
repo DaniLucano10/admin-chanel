@@ -8,14 +8,17 @@ import {
   useUpdateUser,
   useDeleteUser,
   useToggleUserStatus,
+  useAssignRole,
+  useUnassignRole,
+  useFetchRoles,
 } from "../../hooks";
-import { AddUserForm, EditUserForm } from "../../components";
+import { AddUserForm, AssignRolesModal, EditUserForm } from "../../components";
 
 export const Users = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [openRoleModal, setOpenRoleModal] = useState(false);
+  const [openAssignModal, setOpenAssignModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -26,7 +29,7 @@ export const Users = () => {
         setOpenEditModal(true);
         break;
       case "role":
-        setOpenRoleModal(true);
+        setOpenAssignModal(true);
         break;
       case "delete":
         setOpenDeleteModal(true);
@@ -37,6 +40,14 @@ export const Users = () => {
   };
 
   const { data, fetchUsers, loading } = useFetchUsers();
+
+  const filteredUsers = data?.filter((user) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      user.fullname?.toLowerCase().includes(term) ||
+      user.email?.toLowerCase().includes(term)
+    );
+  });
 
   const {
     register,
@@ -62,24 +73,49 @@ export const Users = () => {
   const { toggleStatus } = useToggleUserStatus({
     fetchUsers,
   });
+
+  const { data: roles, loading: loadingRoles } = useFetchRoles();
+
+  const { assignRole } = useAssignRole({
+    fetch: fetchUsers,
+    close: () => {},
+  });
+
+  const { unassignRole } = useUnassignRole({
+    fetch: fetchUsers,
+    close: () => {},
+  });
+  const handleRoleChange = async (roleId, checked) => {
+    if (!selectedItem) return;
+
+    try {
+      if (checked) {
+        await assignRole({ user_id: selectedItem.id, role_id: roleId });
+      } else {
+        await unassignRole({ user_id: selectedItem.id, role_id: roleId });
+      }
+
+      // Actualiza selectedItem.roles localmente para reflejar el cambio inmediato
+      const updatedRoles = checked
+        ? [...(selectedItem.roles || []), { id: roleId }]
+        : selectedItem.roles.filter((role) => role.id !== roleId);
+
+      setSelectedItem((prev) => ({
+        ...prev,
+        roles: updatedRoles,
+      }));
+    } catch (error) {
+      console.error("Error al cambiar rol:", error);
+    }
+  };
+
   const handleDelete = async (e) => {
     e.preventDefault();
     await deleteUser();
   };
 
-  const filteredUsers = data?.filter((user) => {
-    const term = searchTerm.toLowerCase();
-    return (
-      user.fullname?.toLowerCase().includes(term) ||
-      user.email?.toLowerCase().includes(term)
-    );
-  });
-
   return (
     <div className="space-y-4 w-full">
-      {/* <h1 className="text-2xl text-black dark:text-white font-bold">
-        Lista de Usuarios
-      </h1> */}
       <div className="flex flex-col p-2 md:p-0 md:flex-row md:items-center md:justify-between gap-4 w-full">
         <div className="relative w-full">
           <RiSearchLine className="absolute top-1/2 -translate-y-1/2 left-3 text-muted-foreground" />
@@ -140,14 +176,15 @@ export const Users = () => {
         />
       </Modal>
 
-      <Modal
-        size="lg"
-        open={openRoleModal}
-        onOpenChange={setOpenRoleModal}
-        title="Asignar Roles"
-      >
-        hola
-      </Modal>
+      <AssignRolesModal
+        open={openAssignModal}
+        close={() => setOpenAssignModal(false)}
+        userRoles={selectedItem?.roles?.map((r) => r.id) || []}
+        roles={roles}
+        loading={loadingRoles}
+        onAssign={handleRoleChange}
+        userName={selectedItem?.fullname}
+      />
 
       <ConfirmDeleteDialog
         open={openDeleteModal}
