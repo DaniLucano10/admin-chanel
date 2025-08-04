@@ -2,50 +2,51 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "../../ui";
-import { useFetchCountry, useFetchRoles } from "../../../hooks";
+// import { useFetchCountry, useFetchRoles } from "../../../hooks";
 import { useEffect } from "react";
 import { CustomSelect, CountrySelect } from "../../ui/select";
 
 const schema = z.object({
-  fullname: z.string().min(3, "El nombre es muy corto"),
+  name: z.string().min(3, "El nombre es muy corto"),
   email: z.string().email("Correo inválido"),
-  country_id: z.number().min(1, "Debes seleccionar un país"),
-  role_id: z
-    .string()
-    .min(1, "Debes seleccionar un rol")
-    .transform((val) => parseInt(val, 10)),
+  // country_id: z.number().min(1, "Debes seleccionar un país"),
+  // role_id: z
+  //   .string()
+  //   .min(1, "Debes seleccionar un rol")
+  //   .transform((val) => parseInt(val, 10)),
 });
 
 export const EditUserForm = ({ user, onUpdate, loading }) => {
-  const { loading: loadingCountry, data: dataCountries } = useFetchCountry();
-  const { data: dataRoles, loading: loadingRoles } = useFetchRoles();
+  // const { loading: loadingCountry, data: dataCountries } = useFetchCountry();
+  // const { data: dataRoles, loading: loadingRoles } = useFetchRoles();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    control,
+    //control,
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      fullname: user?.fullname,
+      name: user?.name,
       email: user?.email,
-      country_id: user?.country_id,
+      //country_id: user?.country_id,
     },
   });
 
   useEffect(() => {
     if (user) {
       reset({
-        fullname: user.fullname,
+        name: user.name,
         email: user.email,
-        country_id: user.country_id,
-        role_id: user.roles?.[0]?.id.toString(), // Assuming user has a roles array
+        // country_id: user.country_id,
+        // role_id: user.roles?.[0]?.id.toString(), // Assuming user has a roles array
       });
     }
   }, [user, reset]);
 
   const onSubmit = (data) => {
+    console.log("Datos enviados al backend:", data);
     onUpdate(user.id, data);
   };
 
@@ -55,10 +56,10 @@ export const EditUserForm = ({ user, onUpdate, loading }) => {
       <div className="flex flex-col md:flex-row items-center justify-between gap-2">
         <div className="w-full md:w-1/2">
           <label className="text-sm font-medium">Nombre completo</label>
-          <Input {...register("fullname")} placeholder="Juan Pérez" />
-          {errors.fullname && (
+          <Input {...register("name")} placeholder="Juan Pérez" />
+          {errors.name && (
             <p className="text-red-500 text-sm mt-1">
-              {errors.fullname.message}
+              {errors.name.message}
             </p>
           )}
         </div>
@@ -78,7 +79,7 @@ export const EditUserForm = ({ user, onUpdate, loading }) => {
       </div>
 
       {/* Rol y País */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-2">
+      {/* <div className="flex flex-col md:flex-row items-center justify-between gap-2">
         <div className="w-full md:w-1/2">
           <label className="text-sm font-medium">Rol</label>
           <Controller
@@ -125,7 +126,7 @@ export const EditUserForm = ({ user, onUpdate, loading }) => {
             </p>
           )}
         </div>
-      </div>
+      </div> */}
 
       <Button
         type="submit"

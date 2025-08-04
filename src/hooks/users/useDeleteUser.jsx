@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { useAuth } from '../useAuth';
-import { useToast } from '../../context/ToastContext';
+import { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../useAuth";
+import { useToast } from "../../context/ToastContext";
 
 export const useDeleteUser = ({ id, close, fetch }) => {
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ export const useDeleteUser = ({ id, close, fetch }) => {
     try {
       const token = getToken();
       await axios.delete(
-        import.meta.env.VITE_API_URL + `/users/${id}`,
+        `https://backactixweb-dev.itscloud.store/users/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -25,7 +25,9 @@ export const useDeleteUser = ({ id, close, fetch }) => {
       fetch();
       close();
     } catch (err) {
-      const errorMessage = err.response?.data?.message || 'Ha ocurrido un error al eliminar los datos.';
+      const errorMessage =
+        err.response?.data?.message ||
+        "Ha ocurrido un error al eliminar los datos.";
       setError({ message: errorMessage });
       showToast(errorMessage, "error");
     } finally {

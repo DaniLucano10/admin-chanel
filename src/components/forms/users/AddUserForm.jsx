@@ -1,27 +1,27 @@
-import { useForm, Controller } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Input } from '../../ui'
-import { useFetchCountry, useFetchRoles } from '../../../hooks'
-import { CustomSelect, CountrySelect } from '../../ui/select'
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Input } from "../../ui";
+//import { useFetchCountry, useFetchRoles } from "../../../hooks";
+import { CustomSelect, CountrySelect } from "../../ui/select";
 
 const schema = z.object({
-  fullname: z.string().min(3, 'El nombre es muy corto'),
-  email: z.string().email('Correo inválido'),
-  password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
-  country_id: z.number().min(1, 'Debes seleccionar un país'),
-  role_id: z.string().min(1, 'Debes seleccionar un rol').transform(val => parseInt(val, 10))
-})
+  name: z.string().min(3, "El nombre es muy corto"),
+  email: z.string().email("Correo inválido"),
+  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+  // country_id: z.number().min(1, 'Debes seleccionar un país'),
+  // role_id: z.string().min(1, 'Debes seleccionar un rol').transform(val => parseInt(val, 10))
+});
 
 export const AddUserForm = ({ onFormSubmit, loading }) => {
-  const { loading: loadingCountry, data: dataCountries } = useFetchCountry()
-  const { data: dataRoles, loading: loadingRoles } = useFetchRoles()
+  // const { loading: loadingCountry, data: dataCountries } = useFetchCountry()
+  // const { data: dataRoles, loading: loadingRoles } = useFetchRoles()
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    control,
+    //control,
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -38,10 +38,10 @@ export const AddUserForm = ({ onFormSubmit, loading }) => {
       <div className="flex flex-col md:flex-row items-center justify-between gap-2">
         <div className="w-full md:w-1/2">
           <label className="text-sm font-medium">Nombre completo</label>
-          <Input {...register("fullname")} placeholder="Juan Pérez" />
-          {errors.fullname && (
+          <Input {...register("name")} placeholder="Juan Pérez" />
+          {errors.name && (
             <p className="text-red-500 text-sm mt-1">
-              {errors.fullname.message}
+              {errors.name.message}
             </p>
           )}
         </div>
@@ -59,7 +59,7 @@ export const AddUserForm = ({ onFormSubmit, loading }) => {
       </div>
 
       {/* Email */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-2">
+      {/* <div className="flex flex-col md:flex-row items-center justify-between gap-2">
         <div className="w-full md:w-1/2">
           <label className="text-sm font-medium">Seleciona rol</label>
           <Controller
@@ -103,7 +103,7 @@ export const AddUserForm = ({ onFormSubmit, loading }) => {
             </p>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* Contraseña */}
       <div>

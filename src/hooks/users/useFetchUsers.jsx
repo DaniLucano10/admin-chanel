@@ -17,7 +17,7 @@ export const useFetchUsers = (params) => {
 
         try {
             const token = getToken();
-            const response = await axios.get(import.meta.env.VITE_API_URL + '/users', {
+            const response = await axios.get('https://backactixweb-dev.itscloud.store/users', {
                 headers: { Authorization: `Bearer ${token}`},
                 params: memoizedParams,
             });

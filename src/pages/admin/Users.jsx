@@ -40,7 +40,7 @@ export const Users = () => {
   };
 
   const { data, fetchUsers, loading } = useFetchUsers();
-
+console.log("datos de la nueva api", data)
   const filteredUsers = data?.filter((user) => {
     const term = searchTerm.toLowerCase();
     return (

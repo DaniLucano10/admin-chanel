@@ -15,8 +15,8 @@ export const useUpdateUser = ({ fetch, close }) => {
 
     try {
       const token = getToken();
-      await axios.patch(
-        `${import.meta.env.VITE_API_URL}/users/${id}`,
+      await axios.put(
+        `https://backactixweb-dev.itscloud.store/users/${id}`,
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },

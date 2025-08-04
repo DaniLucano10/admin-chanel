@@ -61,8 +61,8 @@ export const UserTable = ({
             <TableHead>N°</TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Roles</TableHead>
-            <TableHead>País</TableHead>
+            {/* <TableHead>Roles</TableHead>
+            <TableHead>País</TableHead> */}
             <TableHead>Estado</TableHead>
             <TableHead>Creado</TableHead>
             <TableHead>Acciones</TableHead>
@@ -79,9 +79,9 @@ export const UserTable = ({
             currentTableData.map((user, index) => (
               <TableRow key={user.id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell className="font-medium">{user.fullname}</TableCell>
+                <TableCell className="font-medium">{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>
+                {/* <TableCell>
                   {user.roles?.length > 0 ? (
                     <span className="inline-block rounded-xl px-3 py-1 text-sm font-medium bg-blue-500 text-gray-800 dark:bg-sidebar-primary dark:text-gray-100">
                       {user.roles[0].name}
@@ -92,7 +92,7 @@ export const UserTable = ({
                     </span>
                   )}
                 </TableCell>
-                <TableCell>{user.country?.name}</TableCell>
+                <TableCell>{user.country?.name}</TableCell> */}
                 <TableCell>
                   <Button
                     onClick={() => onToggleStatus(user)}
@@ -123,7 +123,7 @@ export const UserTable = ({
                         <RiEditLine />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip text="Asignar roles">
+                    {/* <Tooltip text="Asignar roles">
                       <IconButton
                         variant="info"
                         rounded="md"
@@ -132,7 +132,7 @@ export const UserTable = ({
                       >
                         <RiShieldUserLine />
                       </IconButton>
-                    </Tooltip>
+                    </Tooltip> */}
                     <Tooltip text="Eliminar usuario">
                       <IconButton
                         variant="danger"
