@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useReadRolesAndPermissions } from '../hooks/users/useReadRolesAndPermissions';
+// import { useReadRolesAndPermissions } from '../hooks/users/useReadRolesAndPermissions';
 
 const PermissionContext = createContext();
 
@@ -15,7 +15,10 @@ export const usePermissions = () => {
 };
 
 export const PermissionProvider = ({ children }) => {
-	const { permissions, loading, error } = useReadRolesAndPermissions();
+	// const { permissions, loading, error } = useReadRolesAndPermissions();
+	const permissions = [];
+	const loading = false;
+	const error = null;
 
 	return (
 		<PermissionContext.Provider value={{ permissions, loading, error }}>

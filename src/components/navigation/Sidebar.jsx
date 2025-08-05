@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import sidebarData from "../../data/sidebar.json";
 import { useAuth } from "../../hooks";
-import { usePermissions } from "../../context/PermissionContext";
+// import { usePermissions } from "../../context/PermissionContext";
 import {
   HiOutlineChevronDoubleLeft,
   HiOutlineChevronDoubleRight,
@@ -66,16 +66,17 @@ export const Sidebar = () => {
     content: null,
   });
   const { logout, getUser } = useAuth();
-  const { permissions } = usePermissions();
+  // const { permissions } = usePermissions();
   const user = getUser();
   const buttonRefs = useRef([]);
 
-  const filteredSidebarData = sidebarData.filter(item => {
-    if (!item.permissions || item.permissions.length === 0) {
-      return true; // Mostrar si no se requieren permisos
-    }
-    return item.permissions.some(p => permissions.includes(p));
-  });
+  const filteredSidebarData = sidebarData;
+  // const filteredSidebarData = sidebarData.filter(item => {
+  //   if (!item.permissions || item.permissions.length === 0) {
+  //     return true; // Mostrar si no se requieren permisos
+  //   }
+  //   return item.permissions.some(p => permissions.includes(p));
+  // });
 
   const showText = !isCollapsed;
 

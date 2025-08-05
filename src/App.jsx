@@ -12,8 +12,8 @@ import {
   Roles,
   Users,
 } from "./pages/admin";
-import { PrivateRoute, ProtectedRoute } from "./ProtectedRoute";
-import { PermissionProvider } from "./context/PermissionContext";
+import { PrivateRoute, /*ProtectedRoute*/ } from "./ProtectedRoute";
+// import { PermissionProvider } from "./context/PermissionContext";
 
 function App() {
   return (
@@ -31,38 +31,38 @@ function App() {
           <Route
             path="/admin"
             element={
-              <PermissionProvider>
+              // <PermissionProvider>
                 <AdminLayout />
-              </PermissionProvider>
+              // </PermissionProvider>
             }
           >
             <Route index element={<Home />} />
-            <Route
+            {/* <Route
               element={<ProtectedRoute requiredPermission="dashboard.view" />}
-            >
+            > */}
               <Route path="/admin/dashboard" element={<Dashboard />} />
-            </Route>
-            <Route element={<ProtectedRoute requiredPermission="users.view" />}>
+            {/* </Route> */}
+            {/* <Route element={<ProtectedRoute requiredPermission="users.view" />}> */}
               <Route path="/admin/users" element={<Users />} />
-            </Route>
-            <Route
+            {/* </Route> */}
+            {/* <Route
               element={<ProtectedRoute requiredPermission="settings.view" />}
-            >
+            > */}
               <Route path="/admin/settings/country" element={<Country />} />
-            </Route>
-            <Route
+            {/* </Route> */}
+            {/* <Route
               element={<ProtectedRoute requiredPermission="settings.view" />}
-            >
+            > */}
               <Route
                 path="/admin/settings/permissions"
                 element={<Permissions />}
               />
-            </Route>
-            <Route
+            {/* </Route> */}
+            {/* <Route
               element={<ProtectedRoute requiredPermission="settings.view" />}
-            >
+            > */}
               <Route path="/admin/settings/roles" element={<Roles />} />
-            </Route>
+            {/* </Route> */}
           </Route>
         </Route>
 

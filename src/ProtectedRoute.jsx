@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { Navigate, useLocation, Outlet } from "react-router-dom";
+import { Navigate, /*useLocation,*/ Outlet } from "react-router-dom";
 import Cookies from "js-cookie";
-import { usePermissions } from "./context/PermissionContext";
+// import { usePermissions } from "./context/PermissionContext";
 
 export const PrivateRoute = () => {
   const token = (() => {
@@ -22,32 +22,32 @@ export const PrivateRoute = () => {
 };
 
 
-export const ProtectedRoute = ({ requiredPermission }) => {
-  const { permissions, loading } = usePermissions();
-  const location = useLocation();
+export const ProtectedRoute = (/*{ requiredPermission }*/) => {
+  // const { permissions, loading } = usePermissions();
+  // const location = useLocation();
 
-  if (loading) {
-    return <div>Loading...</div>; // O un componente de esqueleto/spinner
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // O un componente de esqueleto/spinner
+  // }
 
-  if (!permissions || permissions.length === 0) {
-    return <Navigate to="/unauthorized" replace state={{ from: location }} />;
-  }
+  // if (!permissions || permissions.length === 0) {
+  //   return <Navigate to="/unauthorized" replace state={{ from: location }} />;
+  // }
 
-  const hasPermission = Array.isArray(requiredPermission)
-    ? requiredPermission.some((perm) => permissions.includes(perm.trim()))
-    : permissions.includes(requiredPermission.trim());
+  // const hasPermission = Array.isArray(requiredPermission)
+  //   ? requiredPermission.some((perm) => permissions.includes(perm.trim()))
+  //   : permissions.includes(requiredPermission.trim());
 
-  if (!hasPermission) {
-    return <Navigate to="/unauthorized" replace state={{ from: location }} />;
-  }
+  // if (!hasPermission) {
+  //   return <Navigate to="/unauthorized" replace state={{ from: location }} />;
+  // }
 
   return <Outlet />;
 };
 
-ProtectedRoute.propTypes = {
-  requiredPermission: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-};
+// ProtectedRoute.propTypes = {
+//   requiredPermission: PropTypes.oneOfType([
+//     PropTypes.string,
+//     PropTypes.arrayOf(PropTypes.string),
+//   ]),
+// };
