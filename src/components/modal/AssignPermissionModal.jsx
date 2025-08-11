@@ -17,20 +17,20 @@ export const AssignPermissionModal = ({
 
   // Módulos en el orden deseado
   const orderedModules = [
-    "USERS",
-    "CUSTOMERS",
+    "USUARIOS",
+    "CLIENTES",
     "DASHBOARD",
-    "SETTINGS",
+    "CONFIGURACIÓN",
     // Agrega más si lo necesitas
   ];
 
   // Alias para agrupar múltiples guard_name bajo un mismo grupo
   const moduleAliasMap = {
-    user: "USERS",
-    users: "USERS",
-    customers: "CUSTOMERS",
+    user: "USUARIOS",
+    users: "USUARIOS",
+    customers: "CLIENTES",
     dashboard: "DASHBOARD",
-    settings: "SETTINGS",
+    settings: "CONFIGURACIÓN",
   };
 
   const groupedPermissions = permissions.reduce((acc, permission) => {
