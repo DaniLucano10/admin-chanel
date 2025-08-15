@@ -17,15 +17,15 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const result = await login(email, password);
+    e.preventDefault();
+    const result = await login(email, password);
 
-  if (result?.access_token) {
-    navigate("/admin");
-  } else {
-    console.log("Error de login");
-  }
-};
+    if (result?.access_token) {
+      navigate("/admin");
+    } else {
+      console.log("Error de login");
+    }
+  };
 
   return (
     <main className="h-screen w-full flex items-center justify-center bg-background text-foreground overflow-hidden">
